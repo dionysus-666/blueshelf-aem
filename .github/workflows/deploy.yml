@@ -17,6 +17,8 @@ jobs:
     if: github.event_name == 'workflow_dispatch' || github.event.workflow_run.conclusion == 'success'
     runs-on: ubuntu-latest
     environment: production
+    env:
+      REVALIDATE_URL: ${{ secrets.STOREFRONT_REVALIDATE_URL }}
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-java@v4
@@ -51,5 +53,5 @@ jobs:
           curl -fsS -D - -o /dev/null "http://${{ secrets.DEPLOY_HOST }}/content/blueshelf/us/en.html" | grep -iE "HTTP/|x-cache"
           curl -fsS "http://${{ secrets.DEPLOY_HOST }}/content/blueshelf/us/en.model.json" | head -c 200
       - name: Revalidate storefront
-        if: ${{ secrets.STOREFRONT_REVALIDATE_URL != '' }}
-        run: curl -fsS -X POST "${{ secrets.STOREFRONT_REVALIDATE_URL }}"
+        if: env.REVALIDATE_URL != ''
+        run: curl -fsS -X POST "$REVALIDATE_URL"
