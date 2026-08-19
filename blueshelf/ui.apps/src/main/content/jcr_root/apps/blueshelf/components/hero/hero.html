@@ -7,7 +7,7 @@
          data-sly-test="${hero.title}">
     <h1 class="hero__title">${hero.title}</h1>
     <p class="hero__subtitle" data-sly-test="${hero.subtitle}">${hero.subtitle}</p>
-    <a class="hero__cta" data-sly-test="${hero.hasCta}" href="${hero.ctaLink @ context='uri'}">${hero.ctaLabel}</a>
+    <a class="hero__cta" data-sly-test="${hero.hasCta}" href="${hero.ctaLink @ context='uri'}" target="${properties.newTab ? '_blank' : ''}">${hero.ctaLabel}</a>
 </section>
 <!--/* Author-time hint when the component is empty (AEM shows a placeholder via cq:editConfig) */-->
 <div class="hero hero--empty" data-sly-test="${!hero.title}">Hero: configure a title</div>

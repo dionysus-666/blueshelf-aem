@@ -29,6 +29,7 @@
           <embeddeds>
             <embedded><groupId>com.blueshelf</groupId><artifactId>blueshelf.core</artifactId><target>/apps/blueshelf-packages/application/install</target></embedded>
             <embedded><groupId>com.blueshelf</groupId><artifactId>blueshelf.ui.apps</artifactId><type>zip</type><target>/apps/blueshelf-packages/application/install</target></embedded>
+            <embedded><groupId>com.blueshelf</groupId><artifactId>blueshelf.ui.config</artifactId><type>zip</type><target>/apps/blueshelf-packages/application/install</target></embedded>
             <embedded><groupId>com.blueshelf</groupId><artifactId>blueshelf.ui.content</artifactId><type>zip</type><target>/apps/blueshelf-packages/content/install</target></embedded>
           </embeddeds>
         </configuration>
@@ -51,6 +52,7 @@
   <dependencies>
     <dependency><groupId>com.blueshelf</groupId><artifactId>blueshelf.core</artifactId><version>${project.version}</version></dependency>
     <dependency><groupId>com.blueshelf</groupId><artifactId>blueshelf.ui.apps</artifactId><version>${project.version}</version><type>zip</type></dependency>
+    <dependency><groupId>com.blueshelf</groupId><artifactId>blueshelf.ui.config</artifactId><version>${project.version}</version><type>zip</type></dependency>
     <dependency><groupId>com.blueshelf</groupId><artifactId>blueshelf.ui.content</artifactId><version>${project.version}</version><type>zip</type></dependency>
   </dependencies>
 

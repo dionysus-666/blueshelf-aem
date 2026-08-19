@@ -1,0 +1,13 @@
+<!--/* Page editor shell. URL: /editor.html/content/blueshelf/us/en  (suffix = page to edit, like AEM's /editor.html) */-->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Editor | BlueShelf Author</title>
+    <link rel="stylesheet" href="/apps/blueshelf/clientlibs/author/author.css">
+</head>
+<body>
+    <div id="app" data-mode="editor" data-page="${request.requestPathInfo.suffix @ context='attribute'}"></div>
+    <script type="module" src="/apps/blueshelf/clientlibs/author/author.js"></script>
+</body>
+</html>

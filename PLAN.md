@@ -99,7 +99,7 @@ aem/
 2. Dialogs (`cq:dialog` Granite XML), `cq:editConfig`, design/style system.
 3. `ui.frontend` with webpack/TS/SCSS → clientlib (`categories`, `dependencies`, `allowProxy`).
 4. Sling Model Exporter: `@Exporter(name="jackson")` → `.model.json` on every page.
-> Note: Sling Starter has no Touch UI page editor. We build an authoring **JSON/REST workflow** + document what the AEM dialog XML would be (I'll generate it — it's the same node structure). If you obtain AEM SDK, it lights up immediately.
+> Done early (see NOTES/02): we built our own Sites console + page editor on top of the real mechanics (cq:dialog, Sling POST, templates/policies, replication). Remaining in this phase: proxying Core Components patterns, clientlib categories, style system.
 
 ### Phase 4 — Headless + React (Days 14–18)
 1. Next.js `storefront`: App Router, fetch `.model.json` from publish through the "dispatcher". Render `ResponsiveGrid`-like component mapping (same idea as AEM SPA Editor's `MapTo`).
@@ -135,4 +135,6 @@ Progress is tracked at the bottom of this file.
 
 ## Progress
 - [x] Phase 0: toolchain + plan
-- [ ] Phase 1
+- [x] Phase 1: hero component + model + tests rendering on author (NOTES/01)
+- [x] Phase 1b (pulled forward from Phase 3): authoring layer — Sites console, page editor, Granite dialogs, editable template + policy, ui.frontend (React/TS), ui.config (run modes, repoinit), replication to publish (NOTES/02)
+- [ ] Phase 2: catalog-api + OSGi service + product components

@@ -1,0 +1,6 @@
+{
+  "publishUrl": "http://publish:8080",
+  "user": "admin",
+  "password": "admin",
+  "enabled": true
+}

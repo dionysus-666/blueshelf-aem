@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  ui.frontend = the JS/TS build (React, Vite). Output goes INTO ui.apps' clientlib folder, so the
+  normal Maven build produces the final content package. Same pattern as the AEM archetype
+  (webpack + aem-clientlib-generator -> ui.apps/.../clientlibs/clientlib-site).
+  Gotcha: Maven reactor order is driven by dependencies, so ui.apps declares a dependency on this module.
+-->
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+  <modelVersion>4.0.0</modelVersion>
+  <parent><groupId>com.blueshelf</groupId><artifactId>blueshelf</artifactId><version>1.0.0-SNAPSHOT</version></parent>
+  <artifactId>blueshelf.ui.frontend</artifactId>
+  <packaging>pom</packaging>
+  <name>BlueShelf - UI frontend (React/TS)</name>
+
+  <build>
+    <plugins>
+      <plugin>
+        <groupId>com.github.eirslett</groupId>
+        <artifactId>frontend-maven-plugin</artifactId>
+        <version>1.15.0</version>
+        <configuration>
+          <nodeVersion>v20.18.0</nodeVersion>
+          <installDirectory>target</installDirectory>
+        </configuration>
+        <executions>
+          <execution><id>install node and npm</id><goals><goal>install-node-and-npm</goal></goals></execution>
+          <execution><id>npm ci</id><goals><goal>npm</goal></goals><configuration><arguments>ci --no-audit --no-fund</arguments></configuration></execution>
+          <execution><id>npm build</id><goals><goal>npm</goal></goals><phase>generate-resources</phase><configuration><arguments>run build</arguments></configuration></execution>
+        </executions>
+      </plugin>
+    </plugins>
+  </build>
+</project>

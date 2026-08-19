@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  cq:dialog = the authoring form. It's a tree of Granite UI "resourceTypes"; AEM's Granite servlet renders it,
+  our editor renders the same nodes in React. `name="./prop"` => saved onto the component node via Sling POST.
+-->
+<jcr:root xmlns:sling="http://sling.apache.org/jcr/sling/1.0" xmlns:cq="http://www.day.com/jcr/cq/1.0"
+          xmlns:jcr="http://www.jcp.org/jcr/1.0" xmlns:nt="http://www.jcp.org/jcr/nt/1.0"
+    jcr:primaryType="nt:unstructured"
+    jcr:title="Hero"
+    sling:resourceType="cq/gui/components/authoring/dialog">
+    <content jcr:primaryType="nt:unstructured" sling:resourceType="granite/ui/components/coral/foundation/container">
+        <items jcr:primaryType="nt:unstructured">
+            <tabs jcr:primaryType="nt:unstructured" sling:resourceType="granite/ui/components/coral/foundation/tabs" maximized="{Boolean}true">
+                <items jcr:primaryType="nt:unstructured">
+                    <properties jcr:primaryType="nt:unstructured" jcr:title="Properties"
+                                sling:resourceType="granite/ui/components/coral/foundation/container" margin="{Boolean}true">
+                        <items jcr:primaryType="nt:unstructured">
+                            <title jcr:primaryType="nt:unstructured"
+                                   sling:resourceType="granite/ui/components/coral/foundation/form/textfield"
+                                   fieldLabel="Title" fieldDescription="Main headline" name="./jcr:title" required="{Boolean}true"/>
+                            <subtitle jcr:primaryType="nt:unstructured"
+                                   sling:resourceType="granite/ui/components/coral/foundation/form/textarea"
+                                   fieldLabel="Subtitle" name="./subtitle"/>
+                            <theme jcr:primaryType="nt:unstructured"
+                                   sling:resourceType="granite/ui/components/coral/foundation/form/select"
+                                   fieldLabel="Theme" name="./theme">
+                                <items jcr:primaryType="nt:unstructured">
+                                    <blue jcr:primaryType="nt:unstructured" text="Blue" value="blue"/>
+                                    <yellow jcr:primaryType="nt:unstructured" text="Yellow" value="yellow"/>
+                                </items>
+                            </theme>
+                        </items>
+                    </properties>
+                    <cta jcr:primaryType="nt:unstructured" jcr:title="Call to action"
+                         sling:resourceType="granite/ui/components/coral/foundation/container" margin="{Boolean}true">
+                        <items jcr:primaryType="nt:unstructured">
+                            <ctaLabel jcr:primaryType="nt:unstructured"
+                                   sling:resourceType="granite/ui/components/coral/foundation/form/textfield"
+                                   fieldLabel="CTA label" name="./ctaLabel"/>
+                            <ctaLink jcr:primaryType="nt:unstructured"
+                                   sling:resourceType="granite/ui/components/coral/foundation/form/pathfield"
+                                   fieldLabel="CTA link" fieldDescription="Pick a page or paste an external URL"
+                                   name="./ctaLink" rootPath="/content/blueshelf"/>
+                            <newTab jcr:primaryType="nt:unstructured"
+                                   sling:resourceType="granite/ui/components/coral/foundation/form/checkbox"
+                                   text="Open in new tab" name="./newTab" value="true" uncheckedValue="false"/>
+                        </items>
+                    </cta>
+                </items>
+            </tabs>
+        </items>
+    </content>
+</jcr:root>

@@ -1,2 +1,6 @@
 <!--/* `properties` = ValueMap of the current resource. context='html' allows authored rich text (sanitized). */-->
-<div class="text">${properties.text @ context='html'}</div>
+<div class="text" data-sly-test="${properties.text}">${properties.text @ context='html'}</div>
+<!--/* Edit-mode placeholder for an empty component (AEM: cq-placeholder via cq:editConfig/empty text) */-->
+<sly data-sly-use.ctx="com.blueshelf.core.models.EditContext" data-sly-test="${!properties.text && ctx.edit}">
+    <div class="hero--empty">Text: double-click to add content</div>
+</sly>

@@ -1,6 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!-- Paths this package OWNS. Install = replace these subtrees. -->
 <workspaceFilter version="1.0">
-    <filter root="/apps/blueshelf"/>
+    <!-- Own specific subtrees so we never overlap with ui.config (/apps/blueshelf/osgiconfig).
+         Overlapping filters across packages = last installed wins = content silently deleted. -->
+    <filter root="/apps/blueshelf/components"/>
+    <filter root="/apps/blueshelf/clientlibs"/>
     <filter root="/apps/cq"/>
 </workspaceFilter>

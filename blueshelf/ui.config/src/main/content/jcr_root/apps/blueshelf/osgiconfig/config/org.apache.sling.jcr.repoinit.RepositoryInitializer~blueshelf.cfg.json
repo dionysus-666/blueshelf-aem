@@ -1,0 +1,5 @@
+{
+  "scripts": [
+    "create path (sling:Folder) /content/blueshelf\n# Public read on clientlibs (AEM equivalent: allowProxy=true + /etc.clientlibs; /apps itself is NOT readable by anonymous)\nset ACL for everyone\n  allow jcr:read on /apps/blueshelf/clientlibs\n  allow jcr:read on /apps/blueshelf/components\nend\n# Editor & sites consoles are author-only UIs but their shells must be readable to show the login form\nset ACL for everyone\n  allow jcr:read on /editor,/sites\nend"
+  ]
+}

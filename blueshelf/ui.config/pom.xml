@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  ui.config = OSGi configurations as content, per run mode:
+    osgiconfig/config          -> all instances
+    osgiconfig/config.author   -> author only
+    osgiconfig/config.publish  -> publish only
+    (AEMaaCS adds config.dev / config.stage / config.prod; secrets via $[env:NAME] / $[secret:NAME])
+  The JCR installer watches these folders and feeds ConfigAdmin. Correlation: application-{profile}.yml.
+-->
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+  <modelVersion>4.0.0</modelVersion>
+  <parent><groupId>com.blueshelf</groupId><artifactId>blueshelf</artifactId><version>1.0.0-SNAPSHOT</version></parent>
+  <artifactId>blueshelf.ui.config</artifactId>
+  <packaging>content-package</packaging>
+  <name>BlueShelf - UI config</name>
+  <build><plugins>
+    <plugin>
+      <groupId>org.apache.jackrabbit</groupId><artifactId>filevault-package-maven-plugin</artifactId><extensions>true</extensions>
+      <configuration><group>com.blueshelf</group><name>blueshelf.ui.config</name><!-- OSGi configs are only allowed in 'container' packages (same rule as bundles) -->
+        <packageType>container</packageType>
+        <validatorsSettings><jackrabbit-filter><options><validRoots>/,/libs,/apps,/etc,/var,/tmp,/content,/conf,/apps/blueshelf</validRoots></options></jackrabbit-filter></validatorsSettings>
+      </configuration>
+    </plugin>
+  </plugins></build>
+</project>

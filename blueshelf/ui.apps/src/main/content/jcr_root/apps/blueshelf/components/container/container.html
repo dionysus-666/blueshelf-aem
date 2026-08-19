@@ -1,9 +1,16 @@
 <!--/*
-  Container = AEM's "parsys"/responsive grid in 6 lines: iterate children and let Sling render each
-  one by its own sling:resourceType. This is THE composition primitive of AEM pages.
+  Container = AEM's "parsys"/responsive grid: iterate children and let Sling render each by its own
+  sling:resourceType. In EDIT mode (wcmmode=edit) we add wrapper markup the page editor can target —
+  exactly what AEM's decoration tags / cq:editConfig do.
 */-->
-<div class="container">
+<div class="container" data-sly-use.ctx="com.blueshelf.core.models.EditContext"
+     data-bs-container="${ctx.edit ? resource.path : ''}">
     <sly data-sly-list.child="${resource.listChildren}">
-        <sly data-sly-resource="${child}"></sly>
+        <div data-sly-test="${ctx.edit}" class="bs-cmp" data-bs-path="${child.path}"
+             data-bs-type="${child.resourceType}" data-bs-name="${child.name}">
+            <sly data-sly-resource="${child}"></sly>
+        </div>
+        <sly data-sly-test="${!ctx.edit}" data-sly-resource="${child}"></sly>
     </sly>
+    <div data-sly-test="${ctx.edit}" class="bs-drop" data-bs-container="${resource.path}">Drag components here</div>
 </div>

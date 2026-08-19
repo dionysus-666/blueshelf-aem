@@ -34,6 +34,7 @@
           <!-- strict validation: catches broken filter/XML before deploy (Cloud Manager does this too) -->
           <validatorsSettings>
             <jackrabbit-nodetypes><options><severityForUnknownNodetypes>WARN</severityForUnknownNodetypes></options></jackrabbit-nodetypes>
+            <jackrabbit-filter><options><validRoots>/,/libs,/apps,/etc,/var,/tmp,/content,/conf,/apps/blueshelf</validRoots></options></jackrabbit-filter>
           </validatorsSettings>
         </configuration>
       </plugin>
@@ -55,6 +56,8 @@
   </build>
 
   <dependencies>
+    <!-- build-order only: ui.frontend writes its output into this module's source tree -->
+    <dependency><groupId>com.blueshelf</groupId><artifactId>blueshelf.ui.frontend</artifactId><version>${project.version}</version><type>pom</type></dependency>
     <dependency>
       <groupId>com.blueshelf</groupId>
       <artifactId>blueshelf.core</artifactId>

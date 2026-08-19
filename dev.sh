@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-# Dev helper. Usage: ./dev.sh up|down|build|deploy|deploy-publish|bundle|logs|status
+# Dev helper. Usage: ./dev.sh up|down|build|deploy|deploy-publish|deploy-all|bundle|apps|fe|logs|status
 set -euo pipefail
 ROOT="$(cd "$(dirname "$0")" && pwd)"
 export JAVA_HOME=/opt/homebrew/opt/openjdk@21/libexec/openjdk.jdk/Contents/Home
@@ -9,9 +9,12 @@ case "${1:-}" in
   down)    (cd "$ROOT/infra" && docker compose down) ;;
   build)   (cd "$ROOT/blueshelf" && mvn -B clean install) ;;
   deploy)  (cd "$ROOT/blueshelf" && mvn -B clean install -PautoInstallSinglePackage) ;;
-  deploy-publish) (cd "$ROOT/blueshelf" && mvn -B clean install -PautoInstallSinglePackage -Dsling.port=4503) ;;
-  bundle)  (cd "$ROOT/blueshelf" && mvn -B install -PautoInstallBundle -pl core) ;;
+  deploy-publish) (cd "$ROOT/blueshelf" && mvn -B install -PautoInstallSinglePackage -pl all -Dsling.port=4503) ;;
+  deploy-all) "$0" deploy && "$0" deploy-publish ;;
+  bundle)  (cd "$ROOT/blueshelf" && mvn -B install -PautoInstallBundle -pl core) ;;           # hot-deploy Java only
+  apps)    (cd "$ROOT/blueshelf" && mvn -B install -PautoInstallPackage -pl ui.apps) ;;       # HTL/dialogs only (includes FE build)
+  fe)      (cd "$ROOT/blueshelf/ui.frontend" && npm run watch) ;;                              # rebuild React on change (then ./dev.sh apps)
   logs)    docker logs -f blueshelf-author ;;
   status)  curl -s -u admin:admin http://localhost:4502/system/console/bundles.json | python3 -c 'import sys,json;d=json.load(sys.stdin);print(d["status"]);[print(b["symbolicName"],b["state"]) for b in d["data"] if "blueshelf" in b["symbolicName"]]' ;;
-  *) echo "usage: $0 up|down|build|deploy|deploy-publish|bundle|logs|status"; exit 1 ;;
+  *) echo "usage: $0 up|down|build|deploy|deploy-publish|deploy-all|bundle|apps|fe|logs|status"; exit 1 ;;
 esac
