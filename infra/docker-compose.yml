@@ -50,6 +50,19 @@ services:
       timeout: 3s
       retries: 20
 
+  # Dispatcher (our Node model of Adobe's Apache module) in front of publish: filters + file cache + flush endpoint.
+  # This is the ONLY thing the internet / the Next.js storefront talks to.   http://localhost:8080
+  dispatcher:
+    build: ../dispatcher
+    container_name: blueshelf-dispatcher
+    ports:
+      - "8080:8080"
+    volumes:
+      - dispatcher-cache:/var/cache/dispatcher
+    depends_on:
+      - publish
+
 volumes:
+  dispatcher-cache:
   author-repo:
   publish-repo:

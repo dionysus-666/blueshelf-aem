@@ -140,7 +140,7 @@ Progress is tracked at the bottom of this file.
 - [x] Phase 2: catalog-api (Spring Boot, Docker) + CatalogService (OSGi config, TTL cache, stale-if-error, circuit breaker) + Product List/Detail/Search components, resourceType servlet, tests (NOTES/03)
 - [x] Phase 3: proxy/inherited components, Style System, clientlibs (cq:ClientLibraryFolder + servlet), ui.frontend two-entry build (NOTES/04)
 - [x] Phase 4: page/container exporters (SPA JSON contract) + Next.js storefront with ISR & revalidation (NOTES/05). Vercel deploy happens in Phase 6 once publish is reachable from the internet.
-- [ ] Phase 5: Dispatcher/caching
+- [x] Phase 5: mini-dispatcher (real dispatcher.any semantics: filters, cache rules, statfiles, ignoreUrlParams, TTL, stale-on-error, flush protocol) + flush agent + storefront revalidation (NOTES/06)
 - [ ] Phase 6: CI/CD (GitHub Actions = Cloud Manager stand-in) + cloud deploy
 - [ ] Phase 7: Edge Delivery Services
 - [ ] Phase 8: interview hardening

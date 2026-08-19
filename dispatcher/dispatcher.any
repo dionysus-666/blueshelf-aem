@@ -1,0 +1,96 @@
+# BlueShelf dispatcher farm — REAL Adobe Dispatcher syntax (subset our mini-dispatcher understands).
+# Mental model: Dispatcher = Apache module in front of publish = (1) security filter, (2) HTML/JSON/asset cache,
+# (3) load balancer. Everything below is evaluated per request, top to bottom; for /filter and /rules the
+# LAST matching rule wins.
+/farms
+{
+  /blueshelf
+  {
+    /clientheaders { "*" }
+    /virtualhosts { "*" }
+
+    # publish renderers (load balanced). Inside docker-compose the publish host is "publish".
+    /renders
+    {
+      /publish { /hostname "publish" /port "8080" /timeout "10000" }
+    }
+
+    # ---------- 1. FILTERS: deny by default, open only what the site needs ----------
+    /filter
+    {
+      /0001 { /type "deny"  /url "*" }
+      # content pages + their JSON exporters (model.json) and the search selector
+      /0010 { /type "allow" /method "GET" /path "/content/blueshelf/*" /extension '(html|json)' }
+      # clientlibs (AEM: /etc.clientlibs/*)
+      /0020 { /type "allow" /method "GET" /path "/apps/blueshelf/clientlibs/*" /extension '(css|js)' }
+      # NEVER expose these through the dispatcher (defense in depth even though publish ACLs exist)
+      /0030 { /type "deny"  /url "/system/*" }
+      /0031 { /type "deny"  /url "/bin/*" }
+      /0032 { /type "deny"  /url "/crx/*" }
+      /0033 { /type "deny"  /url "/apps/*/osgiconfig/*" }
+      /0034 { /type "deny"  /url "*.infinity.json" }
+      /0035 { /type "deny"  /path "/content/blueshelf/*" /selectors '([0-9]+)' /extension "json" }   # depth json renderers
+      /0036 { /type "deny"  /url "/editor.html*" }
+      /0037 { /type "deny"  /url "/sites.html*" }
+      # writes never pass on publish
+      /0040 { /type "deny"  /method "POST" /url "*" }
+      # dispatcher flush endpoint (restricted to /allowedClients below)
+      /0050 { /type "allow" /method "POST" /url "/dispatcher/invalidate.cache" }
+    }
+
+    # ---------- 2. CACHE ----------
+    /cache
+    {
+      /docroot "/var/cache/dispatcher"
+      # Only requests WITHOUT Authorization header / login cookie are cached when 0
+      /allowAuthorized "0"
+      # .stat files are touched at this directory depth on invalidation; files below a newer .stat are stale
+      /statfileslevel "4"
+      /serveStaleOnError "1"
+      /enableTTL "1"
+
+      # which responses are cached (LAST match wins)
+      /rules
+      {
+        /0000 { /glob "*" /type "deny" }
+        /0001 { /glob "/content/blueshelf/*.html" /type "allow" }
+        /0002 { /glob "/content/blueshelf/*.model.json*" /type "allow" }
+        /0003 { /glob "/apps/blueshelf/clientlibs/*" /type "allow" }
+        # search results depend on ?q= — never cache
+        /0010 { /glob "/content/blueshelf/*.search.json" /type "deny" }
+        /0011 { /glob "/content/blueshelf/*/search.html" /type "deny" }
+        /0012 { /glob "/content/blueshelf/*/search.model.json" /type "deny" }
+      }
+
+      # which cached files are invalidated when a .stat is touched (vs kept until explicitly flushed)
+      /invalidate
+      {
+        /0000 { /glob "*" /type "deny" }
+        /0001 { /glob "*.html" /type "allow" }
+        /0002 { /glob "*.model.json*" /type "allow" }
+      }
+
+      # who may POST /dispatcher/invalidate.cache (publish flush agents, author agent in our case)
+      /allowedClients
+      {
+        /0000 { /glob "*" /type "deny" }
+        /0001 { /glob "127.0.0.1" /type "allow" }
+        /0002 { /glob "172.*" /type "allow" }     # docker network
+        /0003 { /glob "192.168.*" /type "allow" }
+      }
+
+      # query params that do NOT matter for the cached representation (tracking) -> ignored;
+      # any other param makes the request uncacheable (passes to publish)
+      /ignoreUrlParams
+      {
+        /0001 { /glob "*" /type "deny" }
+        /0002 { /glob "utm_*" /type "allow" }
+        /0003 { /glob "gclid" /type "allow" }
+        /0004 { /glob "_" /type "allow" }
+      }
+
+      # response headers to store with the cached file and replay
+      /headers { "Content-Type" "Cache-Control" "Content-Language" "X-Content-Type-Options" }
+    }
+  }
+}

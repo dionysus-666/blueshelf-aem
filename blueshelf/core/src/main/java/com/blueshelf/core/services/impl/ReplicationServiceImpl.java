@@ -57,6 +57,12 @@ public class ReplicationServiceImpl implements ReplicationService {
 
         @AttributeDefinition(name = "Enabled")
         boolean enabled() default true;
+
+        @AttributeDefinition(name = "Dispatcher flush URLs", description = "Dispatcher invalidate endpoints, e.g. http://dispatcher:8080/dispatcher/invalidate.cache. In AEM this is a separate 'Dispatcher Flush' replication agent (usually on publish).")
+        String[] dispatcherFlushUrls() default {};
+
+        @AttributeDefinition(name = "Frontend revalidate URL", description = "Optional webhook for headless frontends (Next.js ISR): {path} is replaced by the content path")
+        String frontendRevalidateUrl() default "";
     }
 
     private static final Logger LOG = LoggerFactory.getLogger(ReplicationServiceImpl.class);
@@ -67,7 +73,8 @@ public class ReplicationServiceImpl implements ReplicationService {
             "jcr:versionHistory", "jcr:isCheckedOut", "jcr:mixinTypes");
 
     private volatile Config config;
-    private final HttpClient http = HttpClient.newBuilder().connectTimeout(Duration.ofSeconds(5)).build();
+    // HTTP/1.1 explicitly: the JDK client tries an h2c upgrade by default, which some Node servers answer by closing the socket
+    private final HttpClient http = HttpClient.newBuilder().version(HttpClient.Version.HTTP_1_1).connectTimeout(Duration.ofSeconds(5)).build();
 
     @Activate
     @Modified
@@ -84,12 +91,14 @@ public class ReplicationServiceImpl implements ReplicationService {
         try {
             if (action == Action.DEACTIVATE) {
                 post(path, Map.of(":operation", "delete"));
+                flush(path, "Deactivate");
                 return "Deactivated " + path;
             }
             Resource res = resolver.getResource(path);
             if (res == null) {
                 throw new ReplicationException("No such resource: " + path);
             }
+            // (flush happens after the content push, see below)
             ensureAncestors(res);
             String parent = res.getParent().getPath();
             String json = toJson(res);
@@ -101,9 +110,44 @@ public class ReplicationServiceImpl implements ReplicationService {
                     ":replace", "true",
                     ":replaceProperties", "true"));
             LOG.info("Activated {} ({} bytes)", path, json.length());
+            flush(path, "Activate");
             return "Activated " + path;
         } catch (IOException | InterruptedException e) {
             throw new ReplicationException("Replication transport failed for " + path + ": " + e.getMessage(), e);
+        }
+    }
+
+    /**
+     * Dispatcher flush = the SAME protocol AEM's flush agent uses: POST with headers
+     * CQ-Action (Activate|Deactivate|Delete), CQ-Handle (content path), CQ-Path (dispatcher path, optional).
+     * Order matters in real life: publish must have the new content BEFORE the cache is invalidated,
+     * otherwise the first visitor re-caches the old page ("flush before activation" is a classic incident).
+     * Failures are logged, not thrown: a dead cache layer must not break authoring.
+     */
+    private void flush(String path, String action) {
+        for (String url : config.dispatcherFlushUrls()) {
+            if (url == null || url.isBlank()) continue;
+            try {
+                HttpRequest req = HttpRequest.newBuilder(URI.create(url))
+                        .header("CQ-Action", action).header("CQ-Handle", path).header("CQ-Path", path)
+                        .timeout(Duration.ofSeconds(5))
+                        .POST(HttpRequest.BodyPublishers.noBody()).build();
+                HttpResponse<String> r = http.send(req, HttpResponse.BodyHandlers.ofString());
+                LOG.info("Dispatcher flush {} {} -> {} {}", action, path, r.statusCode(), abbreviate(r.body()).trim());
+            } catch (Exception e) {
+                LOG.warn("Dispatcher flush failed for {} at {}: {}", path, url, e.toString());
+            }
+        }
+        String fe = config.frontendRevalidateUrl();
+        if (fe != null && !fe.isBlank()) {
+            try {
+                HttpRequest req = HttpRequest.newBuilder(URI.create(fe.replace("{path}", enc(path)))).timeout(Duration.ofSeconds(5))
+                        .POST(HttpRequest.BodyPublishers.noBody()).build();
+                HttpResponse<String> r = http.send(req, HttpResponse.BodyHandlers.ofString());
+                LOG.info("Frontend revalidate {} -> {}", path, r.statusCode());
+            } catch (Exception e) {
+                LOG.warn("Frontend revalidate failed for {}: {}", path, e.toString());
+            }
         }
     }
 

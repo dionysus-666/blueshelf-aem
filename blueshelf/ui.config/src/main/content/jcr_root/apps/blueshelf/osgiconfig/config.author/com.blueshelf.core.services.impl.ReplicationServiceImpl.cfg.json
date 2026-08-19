@@ -2,5 +2,7 @@
   "publishUrl": "http://publish:8080",
   "user": "admin",
   "password": "admin",
-  "enabled": true
+  "enabled": true,
+  "dispatcherFlushUrls": ["http://dispatcher:8080/dispatcher/invalidate.cache"],
+  "frontendRevalidateUrl": "http://host.docker.internal:3000/api/revalidate?secret=dev-secret&path={path}"
 }
