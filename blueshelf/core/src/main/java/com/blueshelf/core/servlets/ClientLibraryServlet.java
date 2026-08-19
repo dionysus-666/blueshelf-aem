@@ -106,7 +106,14 @@ public class ClientLibraryServlet extends SlingSafeMethodsServlet {
 
     private static String readText(Resource file) throws IOException {
         try (InputStream in = file.adaptTo(InputStream.class)) {
-            return in == null ? "" : new String(in.readAllBytes(), StandardCharsets.UTF_8);
+            if (in != null) return new String(in.readAllBytes(), StandardCharsets.UTF_8);
         }
+        // nt:file -> jcr:content/jcr:data (binary or, in mocks/tests, a plain string)
+        Resource content = file.getChild("jcr:content");
+        if (content == null) return "";
+        try (InputStream in = content.getValueMap().get("jcr:data", InputStream.class)) {
+            if (in != null) return new String(in.readAllBytes(), StandardCharsets.UTF_8);
+        }
+        return content.getValueMap().get("jcr:data", "");
     }
 }

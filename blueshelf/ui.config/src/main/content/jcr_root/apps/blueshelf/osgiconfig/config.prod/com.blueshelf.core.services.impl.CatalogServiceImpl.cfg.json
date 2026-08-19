@@ -1,0 +1,8 @@
+{
+  "baseUrl": "http://catalog-api:8081",
+  "timeoutMs": 1000,
+  "cacheTtlSeconds": 300,
+  "staleIfErrorSeconds": 3600,
+  "breakerFailures": 3,
+  "breakerOpenSeconds": 30
+}

@@ -1,0 +1,96 @@
+# CI = our "Cloud Manager pipeline": Build -> Unit tests + coverage -> Code quality (AEM analyser, package validation)
+# -> Frontend/service builds -> Docker images to GHCR (main only).
+# Cloud Manager correlation:  Build & Unit Test | Code Scanning (Sonar + aemanalyser + dispatcher validator)
+#                            | Build Images | Deploy to Dev/Stage/Prod (see deploy.yml)
+name: ci
+on:
+  push: { branches: [main] }
+  pull_request:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  packages: write
+  checks: write
+
+jobs:
+  aem:
+    name: AEM project (Maven)
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-java@v4
+        with: { distribution: temurin, java-version: '21', cache: maven }
+      - uses: actions/setup-node@v4
+        with: { node-version: '20' }
+      - name: Build, unit tests, package validation, AEM analyser
+        working-directory: blueshelf
+        # -Daem.analyser.failOnErrors=true: the analyser is a GATE here, like Cloud Manager's code-quality step
+        run: mvn -B -ntp clean install -Daem.analyser.failOnErrors=true
+      - name: Coverage gate (JaCoCo >= 50% lines on core)  # Cloud Manager requires 50% unit test coverage
+        working-directory: blueshelf/core
+        run: |
+          python3 - <<'PY'
+          import xml.etree.ElementTree as ET
+          r = ET.parse('target/site/jacoco/jacoco.xml').getroot()
+          c = [x for x in r.findall('counter') if x.get('type') == 'LINE'][0]
+          covered, missed = int(c.get('covered')), int(c.get('missed'))
+          pct = covered * 100 / (covered + missed)
+          print(f'line coverage: {pct:.1f}%')
+          assert pct >= 50, 'coverage below 50%'
+          PY
+      - name: Test report
+        if: always()
+        uses: dorny/test-reporter@v1
+        with: { name: AEM unit tests, path: 'blueshelf/core/target/surefire-reports/*.xml', reporter: java-junit }
+      - uses: actions/upload-artifact@v4
+        with: { name: blueshelf-all, path: blueshelf/all/target/*.zip, retention-days: 7 }
+
+  dispatcher:
+    name: Dispatcher config validation
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with: { node-version: '20' }
+      - name: Validate dispatcher.any (parse + safety rules)   # Cloud Manager runs Adobe's Dispatcher SDK validator here
+        working-directory: dispatcher
+        run: node validate.mjs
+
+  catalog-api:
+    name: Catalog API (Spring Boot)
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-java@v4
+        with: { distribution: temurin, java-version: '21', cache: maven }
+      - run: mvn -B -ntp verify
+        working-directory: catalog-api
+
+  storefront:
+    name: Storefront (Next.js)
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with: { node-version: '20', cache: npm, cache-dependency-path: storefront/package-lock.json }
+      - run: npm ci && npx tsc --noEmit && npm run build
+        working-directory: storefront
+        env: { AEM_HOST: 'http://localhost:8080' }
+
+  images:
+    name: Build & push images (GHCR)
+    needs: [aem, dispatcher, catalog-api]
+    if: github.ref == 'refs/heads/main' && github.event_name != 'pull_request'
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: docker/login-action@v3
+        with: { registry: ghcr.io, username: '${{ github.actor }}', password: '${{ secrets.GITHUB_TOKEN }}' }
+      - name: Push dispatcher & catalog-api images
+        run: |
+          OWNER=$(echo "${{ github.repository_owner }}" | tr '[:upper:]' '[:lower:]')
+          docker build -t ghcr.io/$OWNER/blueshelf-dispatcher:latest -t ghcr.io/$OWNER/blueshelf-dispatcher:${{ github.sha }} dispatcher
+          docker build -t ghcr.io/$OWNER/blueshelf-catalog-api:latest -t ghcr.io/$OWNER/blueshelf-catalog-api:${{ github.sha }} catalog-api
+          docker push --all-tags ghcr.io/$OWNER/blueshelf-dispatcher
+          docker push --all-tags ghcr.io/$OWNER/blueshelf-catalog-api

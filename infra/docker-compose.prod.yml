@@ -1,0 +1,33 @@
+# Production-ish topology on ONE docker host (what deploy.yml ships). Images for our services come from GHCR (OWNER in .env).
+#   :80   dispatcher  -> publish            (public)
+#   :4502 author      bound to 127.0.0.1    (reach via ssh -L 4502:localhost:4502 user@host)
+#   :4503 publish     bound to 127.0.0.1
+#   :8081 catalog-api internal only
+services:
+  author:
+    image: apache/sling:14
+    restart: unless-stopped
+    ports: ["127.0.0.1:4502:8080"]
+    volumes: [author-repo:/opt/sling/sling]
+    environment: [ "EXTRA_JAVA_OPTS=-Xmx1g -Dsling.run.modes=author,prod" ]
+  publish:
+    image: apache/sling:14
+    restart: unless-stopped
+    ports: ["127.0.0.1:4503:8080"]
+    volumes: [publish-repo:/opt/sling/sling]
+    environment: [ "EXTRA_JAVA_OPTS=-Xmx1g -Dsling.run.modes=publish,prod" ]
+  catalog-api:
+    image: ghcr.io/${OWNER}/blueshelf-catalog-api:latest
+    restart: unless-stopped
+  dispatcher:
+    image: ghcr.io/${OWNER}/blueshelf-dispatcher:latest
+    restart: unless-stopped
+    ports: ["80:8080"]
+    volumes:
+      - dispatcher-cache:/var/cache/dispatcher
+      - ./dispatcher.any:/app/dispatcher.any:ro
+    depends_on: [publish]
+volumes:
+  author-repo:
+  publish-repo:
+  dispatcher-cache:

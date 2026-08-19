@@ -1,0 +1,15 @@
+{
+  "jcr:primaryType": "sling:Folder",
+  "components": { "jcr:primaryType": "sling:Folder",
+    "title": { "jcr:primaryType": "cq:Component", "sling:resourceSuperType": "blueshelf/components/base/title/v1/title" },
+    "teaser": { "jcr:primaryType": "cq:Component", "sling:resourceSuperType": "blueshelf/components/base/teaser/v1/teaser" },
+    "base": { "jcr:primaryType": "sling:Folder", "title": { "jcr:primaryType": "sling:Folder", "v1": { "jcr:primaryType": "sling:Folder", "title": { "jcr:primaryType": "cq:Component" } } },
+      "teaser": { "jcr:primaryType": "sling:Folder", "v1": { "jcr:primaryType": "sling:Folder", "teaser": { "jcr:primaryType": "cq:Component" } } } } },
+  "clientlibs": { "jcr:primaryType": "sling:Folder",
+    "clientlib-base": { "jcr:primaryType": "cq:ClientLibraryFolder", "categories": ["blueshelf.base"],
+      "css.txt": { "jcr:primaryType": "nt:file", "jcr:content": { "jcr:primaryType": "nt:resource", "jcr:data": "#base=css\nbase.css\nmissing.css\n" } },
+      "css": { "jcr:primaryType": "nt:folder", "base.css": { "jcr:primaryType": "nt:file", "jcr:content": { "jcr:primaryType": "nt:resource", "jcr:data": ".base{}" } } } },
+    "clientlib-site": { "jcr:primaryType": "cq:ClientLibraryFolder", "categories": ["blueshelf.site"], "dependencies": ["blueshelf.base"],
+      "css.txt": { "jcr:primaryType": "nt:file", "jcr:content": { "jcr:primaryType": "nt:resource", "jcr:data": "#base=css\nsite.css\n" } },
+      "css": { "jcr:primaryType": "nt:folder", "site.css": { "jcr:primaryType": "nt:file", "jcr:content": { "jcr:primaryType": "nt:resource", "jcr:data": ".site{}" } } } } }
+}

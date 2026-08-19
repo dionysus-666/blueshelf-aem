@@ -46,6 +46,7 @@
     <bnd.version>7.0.0</bnd.version>
     <filevault.plugin.version>1.4.0</filevault.plugin.version>
     <wcmio.cpm.version>2.5.0</wcmio.cpm.version>
+    <aem.analyser.failOnErrors>false</aem.analyser.failOnErrors>
   </properties>
 
   <dependencyManagement>

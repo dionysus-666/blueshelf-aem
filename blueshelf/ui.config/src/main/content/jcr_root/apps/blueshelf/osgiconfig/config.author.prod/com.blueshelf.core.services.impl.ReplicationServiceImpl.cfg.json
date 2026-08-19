@@ -1,0 +1,8 @@
+{
+  "publishUrl": "http://publish:8080",
+  "user": "admin",
+  "password": "$[env:AEM_ADMIN_PASSWORD;default=admin]",
+  "enabled": true,
+  "dispatcherFlushUrls": ["http://dispatcher:8080/dispatcher/invalidate.cache"],
+  "frontendRevalidateUrl": "$[env:STOREFRONT_REVALIDATE_URL;default=]"
+}

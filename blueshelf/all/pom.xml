@@ -46,6 +46,27 @@
           <force>true</force>
         </configuration>
       </plugin>
+      <!--
+        Cloud Manager's code-quality analyser, run locally/in CI (profile -Paemanalyser). It unpacks the `all`
+        package, resolves bundles + configs + content and checks them against the AEM as a Cloud Service SDK:
+        unresolved Import-Package, deprecated APIs, bad OSGi configs, repoinit syntax, content in /apps vs /content, etc.
+        Same checks gate every Cloud Manager pipeline => free feedback on AEMaaCS-compatibility without an instance.
+      -->
+      <plugin>
+        <groupId>com.adobe.aem</groupId>
+        <artifactId>aemanalyser-maven-plugin</artifactId>
+        <version>1.7.2</version>
+        <executions>
+          <execution>
+            <id>aem-analyser</id>
+            <goals><goal>project-analyse</goal></goals>
+            <configuration>
+              <!-- our Sling-only helpers would be flagged on real AEM; we still want to SEE them, so don't fail -->
+              <failOnAnalyserErrors>${aem.analyser.failOnErrors}</failOnAnalyserErrors>
+            </configuration>
+          </execution>
+        </executions>
+      </plugin>
     </plugins>
   </build>
 
