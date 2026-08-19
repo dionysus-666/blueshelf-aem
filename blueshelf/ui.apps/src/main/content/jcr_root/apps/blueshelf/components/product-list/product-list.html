@@ -1,0 +1,34 @@
+<!--/*
+  Product List: authored config (dialog) + live catalog data (service). Model adapted from the REQUEST.
+  Note the 3 render states: live/cached, stale (backend down but we have data), unavailable.
+*/-->
+<section class="plp" data-sly-use.list="com.blueshelf.core.models.ProductListModel">
+    <header class="plp__head">
+        <h2 data-sly-test="${list.title}">${list.title}</h2>
+        <p class="plp__meta" data-sly-test="${list.searchText}">Results for “${list.searchText}” — ${list.total} found</p>
+        <p class="plp__stale" data-sly-test="${list.stale}">⚠ Prices may be out of date (catalog temporarily unavailable).</p>
+        <small class="plp__src">source: ${list.source}</small>
+    </header>
+
+    <div class="plp__unavailable" data-sly-test="${!list.available}">
+        Products are temporarily unavailable. Please try again shortly.
+    </div>
+    <p data-sly-test="${list.available && list.empty}">No products match.</p>
+
+    <ul class="plp__grid" data-sly-test="${!list.empty}">
+        <li class="card" data-sly-list.p="${list.products}">
+            <a class="card__link" href="${list.productPagePath}.html/${p.sku}">
+                <img class="card__img" src="${p.image}" alt="${p.name}" loading="lazy">
+                <span class="card__brand">${p.brand}</span>
+                <span class="card__name">${p.name}</span>
+            </a>
+            <div class="card__price">
+                <span class="price ${p.onSale ? 'price--sale' : ''}">$${p.currentPrice @ format='#,##0.00'}</span>
+                <span class="price--was" data-sly-test="${p.onSale}">Was $${p.price}</span>
+                <span class="badge" data-sly-test="${p.onSale}">Save ${p.savingsPercent}%</span>
+            </div>
+            <div class="card__rating">★ ${p.rating} <small>(${p.reviewCount})</small></div>
+            <div class="card__stock ${p.inStock ? 'in' : 'out'}">${p.inStock ? 'In stock' : 'Sold out'}</div>
+        </li>
+    </ul>
+</section>

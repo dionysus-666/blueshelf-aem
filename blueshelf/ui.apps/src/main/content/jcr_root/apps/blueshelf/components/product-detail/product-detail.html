@@ -1,0 +1,22 @@
+<section class="pdp" data-sly-use.pdp="com.blueshelf.core.models.ProductDetailModel">
+    <div class="hero--empty" data-sly-test="${pdp.noSku}">Product Detail: set a SKU in the dialog, or open this page with a suffix like <code>.html/BS1001</code></div>
+    <div class="pdp__missing" data-sly-test="${pdp.notFound}">Sorry — product <b>${pdp.sku}</b> is not available right now.</div>
+    <sly data-sly-test="${pdp.found}" data-sly-set.p="${pdp.product}">
+        <div class="pdp__grid">
+            <img class="pdp__img" src="${p.image}" alt="${p.name}">
+            <div class="pdp__info">
+                <div class="card__brand">${p.brand}</div>
+                <h1 class="pdp__name">${p.name}</h1>
+                <div class="card__rating">★ ${p.rating} <small>(${p.reviewCount} reviews)</small> · SKU ${p.sku}</div>
+                <div class="pdp__price">
+                    <span class="price ${p.onSale ? 'price--sale' : ''}">$${p.currentPrice @ format='#,##0.00'}</span>
+                    <span class="price--was" data-sly-test="${p.onSale}">Was $${p.price}</span>
+                    <span class="badge" data-sly-test="${p.onSale}">Save ${p.savingsPercent}%</span>
+                </div>
+                <p>${p.shortDescription}</p>
+                <ul class="pdp__highlights"><li data-sly-repeat="${p.highlights}">${item}</li></ul>
+                <button class="pdp__cta" disabled="${!p.inStock}">${p.inStock ? 'Add to Cart' : 'Sold Out'}</button>
+            </div>
+        </div>
+    </sly>
+</section>

@@ -137,4 +137,10 @@ Progress is tracked at the bottom of this file.
 - [x] Phase 0: toolchain + plan
 - [x] Phase 1: hero component + model + tests rendering on author (NOTES/01)
 - [x] Phase 1b (pulled forward from Phase 3): authoring layer — Sites console, page editor, Granite dialogs, editable template + policy, ui.frontend (React/TS), ui.config (run modes, repoinit), replication to publish (NOTES/02)
-- [ ] Phase 2: catalog-api + OSGi service + product components
+- [x] Phase 2: catalog-api (Spring Boot, Docker) + CatalogService (OSGi config, TTL cache, stale-if-error, circuit breaker) + Product List/Detail/Search components, resourceType servlet, tests (NOTES/03)
+- [ ] Phase 3: Core-Components-style proxying, clientlib categories, style system, remaining authoring polish
+- [ ] Phase 4: Next.js headless storefront (Vercel)
+- [ ] Phase 5: Dispatcher/caching
+- [ ] Phase 6: CI/CD (GitHub Actions = Cloud Manager stand-in) + cloud deploy
+- [ ] Phase 7: Edge Delivery Services
+- [ ] Phase 8: interview hardening

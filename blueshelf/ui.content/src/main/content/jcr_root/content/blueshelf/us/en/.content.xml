@@ -16,6 +16,18 @@
                 ctaLabel="Shop TVs"
                 ctaLink="/content/blueshelf/us/en/tvs"
                 theme="yellow"/>
+            <search
+                jcr:primaryType="nt:unstructured"
+                sling:resourceType="blueshelf/components/search-box"
+                resultsPage="/content/blueshelf/us/en/search"
+                placeholder="Search TVs, laptops, headphones…"/>
+            <deals
+                jcr:primaryType="nt:unstructured"
+                sling:resourceType="blueshelf/components/product-list"
+                jcr:title="Today's top deals"
+                limit="{Long}4"
+                sort="rating"
+                productPagePath="/content/blueshelf/us/en/product"/>
             <text
                 jcr:primaryType="nt:unstructured"
                 sling:resourceType="blueshelf/components/text"

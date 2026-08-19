@@ -5,5 +5,5 @@
     jcr:primaryType="nt:unstructured">
     <default jcr:primaryType="nt:unstructured" jcr:title="BlueShelf content container"
              sling:resourceType="wcm/core/components/policy/policy"
-             components="[group:BlueShelf - Content]"/>
+             components="[group:BlueShelf - Content,group:BlueShelf - Commerce]"/>
 </jcr:root>

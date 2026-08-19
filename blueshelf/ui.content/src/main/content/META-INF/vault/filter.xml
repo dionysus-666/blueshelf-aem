@@ -2,8 +2,9 @@
 <workspaceFilter version="1.0">
     <!-- /conf = site configuration (templates, policies). Owned by the project, so replace mode. -->
     <filter root="/conf/blueshelf"/>
-    <!-- /content = authored pages: merge => seed only, never clobber authors' work -->
-    <filter root="/content/blueshelf" mode="merge"/>
+    <!-- /content = sample pages. mode="update": add/refresh nodes in the package, never delete others.
+         In production projects use mode="merge" (seed once, authors own /content afterwards). -->
+    <filter root="/content/blueshelf" mode="update"/>
     <!-- author-UI entry points: /editor.html/<page> and /sites.html (AEM has these under /libs; Sling has no /libs UI) -->
     <filter root="/editor"/>
     <filter root="/sites"/>

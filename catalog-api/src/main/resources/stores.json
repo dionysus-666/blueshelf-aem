@@ -1,0 +1,68 @@
+[
+ {
+  "id": "S001",
+  "name": "Richfield (HQ)",
+  "address": "1000 W 78th St",
+  "city": "Richfield",
+  "state": "MN",
+  "zip": "55423",
+  "lat": 44.864,
+  "lng": -93.29,
+  "hours": "10am\u20138pm"
+ },
+ {
+  "id": "S002",
+  "name": "Minneapolis Downtown",
+  "address": "710 Nicollet Mall",
+  "city": "Minneapolis",
+  "state": "MN",
+  "zip": "55402",
+  "lat": 44.975,
+  "lng": -93.272,
+  "hours": "10am\u20137pm"
+ },
+ {
+  "id": "S003",
+  "name": "Roseville",
+  "address": "1643 County Rd B2 W",
+  "city": "Roseville",
+  "state": "MN",
+  "zip": "55113",
+  "lat": 45.015,
+  "lng": -93.17,
+  "hours": "10am\u20138pm"
+ },
+ {
+  "id": "S004",
+  "name": "Chicago Lincoln Park",
+  "address": "1000 W North Ave",
+  "city": "Chicago",
+  "state": "IL",
+  "zip": "60642",
+  "lat": 41.91,
+  "lng": -87.653,
+  "hours": "10am\u20139pm"
+ },
+ {
+  "id": "S005",
+  "name": "Austin Arboretum",
+  "address": "9607 Research Blvd",
+  "city": "Austin",
+  "state": "TX",
+  "zip": "78759",
+  "lat": 30.39,
+  "lng": -97.746,
+  "hours": "10am\u20138pm"
+ },
+ {
+  "id": "S006",
+  "name": "San Jose Santana Row",
+  "address": "3090 Stevens Creek Blvd",
+  "city": "San Jose",
+  "state": "CA",
+  "zip": "95128",
+  "lat": 37.32,
+  "lng": -121.95,
+  "hours": "10am\u20139pm"
+ }
+]

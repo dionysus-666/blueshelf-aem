@@ -11,3 +11,20 @@
 .hero--yellow .hero__cta{background:var(--bby-blue);color:#fff}
 .text{background:#fff;padding:1rem 1.25rem;border-radius:8px;margin:1rem 0}
 .site-footer{text-align:center;padding:2rem;color:#777}
+/* --- commerce components --- */
+.plp{margin:1rem 0}.plp__head{display:flex;align-items:baseline;gap:1rem;flex-wrap:wrap}.plp__head h2{margin:.5rem 0}
+.plp__src{margin-left:auto;color:#999}.plp__stale{background:#fff8d6;border:1px solid #f0d000;padding:.4rem .75rem;border-radius:6px;width:100%}
+.plp__unavailable{background:#fff;border:1px dashed #c66;padding:1rem;border-radius:8px;color:#933}
+.plp__grid{list-style:none;margin:0;padding:0;display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:1rem}
+.card{background:#fff;border-radius:10px;padding:.75rem;box-shadow:0 1px 3px rgba(0,0,0,.08);display:flex;flex-direction:column;gap:.25rem}
+.card__link{color:inherit;text-decoration:none;display:flex;flex-direction:column;gap:.25rem}.card__img{width:100%;aspect-ratio:4/3;object-fit:cover;border-radius:6px}
+.card__brand{font-size:12px;color:#666;text-transform:uppercase}.card__name{font-weight:600;min-height:2.6em}
+.price{font-weight:700;font-size:1.15rem}.price--sale{color:#bb0628}.price--was{color:#888;text-decoration:line-through;margin-left:.4rem;font-size:.9rem}
+.badge{background:#ffe000;color:#1d252c;font-size:11px;font-weight:700;padding:2px 6px;border-radius:4px;margin-left:.4rem}
+.card__rating{font-size:.9rem;color:#b86e00}.card__stock.in{color:#1a7f37;font-size:.85rem}.card__stock.out{color:#999;font-size:.85rem}
+.pdp{background:#fff;border-radius:10px;padding:1.5rem;margin:1rem 0}.pdp__grid{display:grid;grid-template-columns:1fr 1fr;gap:2rem}.pdp__img{width:100%;border-radius:8px}
+.pdp__name{margin:.25rem 0}.pdp__price{margin:1rem 0}.pdp__price .price{font-size:1.8rem}.pdp__highlights{padding-left:1.2rem}
+.pdp__cta{background:#ffe000;border:0;padding:.8rem 1.5rem;font-weight:700;border-radius:999px;cursor:pointer}.pdp__cta:disabled{background:#ddd;cursor:default}
+.pdp__missing{padding:1rem;color:#933}
+.search{display:flex;gap:.5rem;margin:1rem 0}.search__input{flex:1;padding:.6rem .8rem;border:1px solid #bbb;border-radius:999px;font:inherit}.search__btn{background:#0046be;color:#fff;border:0;padding:.6rem 1.2rem;border-radius:999px;font-weight:600}
+@media (max-width:720px){.pdp__grid{grid-template-columns:1fr}}

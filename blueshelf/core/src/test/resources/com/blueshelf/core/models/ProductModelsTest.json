@@ -1,0 +1,28 @@
+{
+  "jcr:primaryType": "cq:Page",
+  "jcr:content": {
+    "jcr:primaryType": "cq:PageContent",
+    "sling:resourceType": "blueshelf/components/page",
+    "root": {
+      "jcr:primaryType": "nt:unstructured",
+      "sling:resourceType": "blueshelf/components/container",
+      "product-list": {
+        "jcr:primaryType": "nt:unstructured",
+        "sling:resourceType": "blueshelf/components/product-list",
+        "jcr:title": "Top TVs",
+        "category": "tvs",
+        "limit": 4,
+        "sort": "price-asc"
+      },
+      "search-results": {
+        "jcr:primaryType": "nt:unstructured",
+        "sling:resourceType": "blueshelf/components/product-list",
+        "useQueryParam": true
+      },
+      "product-detail": {
+        "jcr:primaryType": "nt:unstructured",
+        "sling:resourceType": "blueshelf/components/product-detail"
+      }
+    }
+  }
+}

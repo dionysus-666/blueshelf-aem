@@ -1,0 +1,542 @@
+[
+ {
+  "sku": "BS1001",
+  "name": "65\" Class QN90D Neo QLED 4K Smart TV",
+  "brand": "Samsung",
+  "category": "tvs",
+  "price": 1599.99,
+  "salePrice": 1299.99,
+  "rating": 4.2,
+  "reviewCount": 1275,
+  "inStock": true,
+  "image": "https://picsum.photos/seed/1001/480/360",
+  "shortDescription": "Samsung 65\" Class QN90D Neo QLED 4K Smart TV \u2014 great pick in tvs.",
+  "highlights": [
+   "Samsung quality",
+   "1-year warranty",
+   "Free shipping on orders $35+"
+  ]
+ },
+ {
+  "sku": "BS1002",
+  "name": "65\" Class C4 Series OLED evo 4K Smart TV",
+  "brand": "LG",
+  "category": "tvs",
+  "price": 1799.99,
+  "salePrice": 1499.99,
+  "rating": 3.9,
+  "reviewCount": 4429,
+  "inStock": false,
+  "image": "https://picsum.photos/seed/1002/480/360",
+  "shortDescription": "LG 65\" Class C4 Series OLED evo 4K Smart TV \u2014 great pick in tvs.",
+  "highlights": [
+   "LG quality",
+   "1-year warranty",
+   "Free shipping on orders $35+"
+  ]
+ },
+ {
+  "sku": "BS1003",
+  "name": "55\" Class BRAVIA 7 QLED 4K Smart TV",
+  "brand": "Sony",
+  "category": "tvs",
+  "price": 1199.99,
+  "salePrice": null,
+  "rating": 4.4,
+  "reviewCount": 4196,
+  "inStock": true,
+  "image": "https://picsum.photos/seed/1003/480/360",
+  "shortDescription": "Sony 55\" Class BRAVIA 7 QLED 4K Smart TV \u2014 great pick in tvs.",
+  "highlights": [
+   "Sony quality",
+   "1-year warranty",
+   "Free shipping on orders $35+"
+  ]
+ },
+ {
+  "sku": "BS1004",
+  "name": "75\" Class Q6 QLED 4K Smart TV",
+  "brand": "TCL",
+  "category": "tvs",
+  "price": 899.99,
+  "salePrice": 699.99,
+  "rating": 3.9,
+  "reviewCount": 3465,
+  "inStock": false,
+  "image": "https://picsum.photos/seed/1004/480/360",
+  "shortDescription": "TCL 75\" Class Q6 QLED 4K Smart TV \u2014 great pick in tvs.",
+  "highlights": [
+   "TCL quality",
+   "1-year warranty",
+   "Free shipping on orders $35+"
+  ]
+ },
+ {
+  "sku": "BS1005",
+  "name": "55\" Class U7 Mini-LED 4K Smart TV",
+  "brand": "Hisense",
+  "category": "tvs",
+  "price": 649.99,
+  "salePrice": 549.99,
+  "rating": 3.9,
+  "reviewCount": 3517,
+  "inStock": false,
+  "image": "https://picsum.photos/seed/1005/480/360",
+  "shortDescription": "Hisense 55\" Class U7 Mini-LED 4K Smart TV \u2014 great pick in tvs.",
+  "highlights": [
+   "Hisense quality",
+   "1-year warranty",
+   "Free shipping on orders $35+"
+  ]
+ },
+ {
+  "sku": "BS1006",
+  "name": "43\" Class F30 4K Fire TV",
+  "brand": "Insignia",
+  "category": "tvs",
+  "price": 229.99,
+  "salePrice": 179.99,
+  "rating": 4.4,
+  "reviewCount": 1868,
+  "inStock": true,
+  "image": "https://picsum.photos/seed/1006/480/360",
+  "shortDescription": "Insignia 43\" Class F30 4K Fire TV \u2014 great pick in tvs.",
+  "highlights": [
+   "Insignia quality",
+   "1-year warranty",
+   "Free shipping on orders $35+"
+  ]
+ },
+ {
+  "sku": "BS1007",
+  "name": "MacBook Air 13\" M3 16GB 256GB",
+  "brand": "Apple",
+  "category": "laptops",
+  "price": 1099.0,
+  "salePrice": 899.0,
+  "rating": 4.4,
+  "reviewCount": 546,
+  "inStock": true,
+  "image": "https://picsum.photos/seed/1007/480/360",
+  "shortDescription": "Apple MacBook Air 13\" M3 16GB 256GB \u2014 great pick in laptops.",
+  "highlights": [
+   "Apple quality",
+   "1-year warranty",
+   "Free shipping on orders $35+"
+  ]
+ },
+ {
+  "sku": "BS1008",
+  "name": "XPS 14 OLED i7 16GB 1TB",
+  "brand": "Dell",
+  "category": "laptops",
+  "price": 1699.99,
+  "salePrice": 1499.99,
+  "rating": 4.2,
+  "reviewCount": 1851,
+  "inStock": false,
+  "image": "https://picsum.photos/seed/1008/480/360",
+  "shortDescription": "Dell XPS 14 OLED i7 16GB 1TB \u2014 great pick in laptops.",
+  "highlights": [
+   "Dell quality",
+   "1-year warranty",
+   "Free shipping on orders $35+"
+  ]
+ },
+ {
+  "sku": "BS1009",
+  "name": "Spectre x360 14 2-in-1 OLED",
+  "brand": "HP",
+  "category": "laptops",
+  "price": 1449.99,
+  "salePrice": null,
+  "rating": 4.7,
+  "reviewCount": 2412,
+  "inStock": true,
+  "image": "https://picsum.photos/seed/1009/480/360",
+  "shortDescription": "HP Spectre x360 14 2-in-1 OLED \u2014 great pick in laptops.",
+  "highlights": [
+   "HP quality",
+   "1-year warranty",
+   "Free shipping on orders $35+"
+  ]
+ },
+ {
+  "sku": "BS1010",
+  "name": "Yoga 7i 16\" 2-in-1 Touch",
+  "brand": "Lenovo",
+  "category": "laptops",
+  "price": 849.99,
+  "salePrice": 649.99,
+  "rating": 4.4,
+  "reviewCount": 4716,
+  "inStock": true,
+  "image": "https://picsum.photos/seed/1010/480/360",
+  "shortDescription": "Lenovo Yoga 7i 16\" 2-in-1 Touch \u2014 great pick in laptops.",
+  "highlights": [
+   "Lenovo quality",
+   "1-year warranty",
+   "Free shipping on orders $35+"
+  ]
+ },
+ {
+  "sku": "BS1011",
+  "name": "ROG Zephyrus G14 RTX 4060",
+  "brand": "ASUS",
+  "category": "laptops",
+  "price": 1599.99,
+  "salePrice": 1399.99,
+  "rating": 4.7,
+  "reviewCount": 1520,
+  "inStock": false,
+  "image": "https://picsum.photos/seed/1011/480/360",
+  "shortDescription": "ASUS ROG Zephyrus G14 RTX 4060 \u2014 great pick in laptops.",
+  "highlights": [
+   "ASUS quality",
+   "1-year warranty",
+   "Free shipping on orders $35+"
+  ]
+ },
+ {
+  "sku": "BS1012",
+  "name": "Surface Laptop 7 13.8\" Snapdragon X",
+  "brand": "Microsoft",
+  "category": "laptops",
+  "price": 999.99,
+  "salePrice": 849.99,
+  "rating": 4.4,
+  "reviewCount": 1579,
+  "inStock": true,
+  "image": "https://picsum.photos/seed/1012/480/360",
+  "shortDescription": "Microsoft Surface Laptop 7 13.8\" Snapdragon X \u2014 great pick in laptops.",
+  "highlights": [
+   "Microsoft quality",
+   "1-year warranty",
+   "Free shipping on orders $35+"
+  ]
+ },
+ {
+  "sku": "BS1013",
+  "name": "WH-1000XM5 Wireless Noise Canceling",
+  "brand": "Sony",
+  "category": "headphones",
+  "price": 399.99,
+  "salePrice": 299.99,
+  "rating": 4.4,
+  "reviewCount": 554,
+  "inStock": true,
+  "image": "https://picsum.photos/seed/1013/480/360",
+  "shortDescription": "Sony WH-1000XM5 Wireless Noise Canceling \u2014 great pick in headphones.",
+  "highlights": [
+   "Sony quality",
+   "1-year warranty",
+   "Free shipping on orders $35+"
+  ]
+ },
+ {
+  "sku": "BS1014",
+  "name": "AirPods Pro 2 with USB-C",
+  "brand": "Apple",
+  "category": "headphones",
+  "price": 249.0,
+  "salePrice": 189.0,
+  "rating": 4.5,
+  "reviewCount": 4106,
+  "inStock": true,
+  "image": "https://picsum.photos/seed/1014/480/360",
+  "shortDescription": "Apple AirPods Pro 2 with USB-C \u2014 great pick in headphones.",
+  "highlights": [
+   "Apple quality",
+   "1-year warranty",
+   "Free shipping on orders $35+"
+  ]
+ },
+ {
+  "sku": "BS1015",
+  "name": "QuietComfort Ultra Headphones",
+  "brand": "Bose",
+  "category": "headphones",
+  "price": 429.0,
+  "salePrice": 349.0,
+  "rating": 4.3,
+  "reviewCount": 2613,
+  "inStock": true,
+  "image": "https://picsum.photos/seed/1015/480/360",
+  "shortDescription": "Bose QuietComfort Ultra Headphones \u2014 great pick in headphones.",
+  "highlights": [
+   "Bose quality",
+   "1-year warranty",
+   "Free shipping on orders $35+"
+  ]
+ },
+ {
+  "sku": "BS1016",
+  "name": "Studio Pro Wireless",
+  "brand": "Beats",
+  "category": "headphones",
+  "price": 349.99,
+  "salePrice": 169.99,
+  "rating": 4.8,
+  "reviewCount": 3002,
+  "inStock": true,
+  "image": "https://picsum.photos/seed/1016/480/360",
+  "shortDescription": "Beats Studio Pro Wireless \u2014 great pick in headphones.",
+  "highlights": [
+   "Beats quality",
+   "1-year warranty",
+   "Free shipping on orders $35+"
+  ]
+ },
+ {
+  "sku": "BS1017",
+  "name": "Momentum 4 Wireless",
+  "brand": "Sennheiser",
+  "category": "headphones",
+  "price": 379.95,
+  "salePrice": null,
+  "rating": 4.7,
+  "reviewCount": 2039,
+  "inStock": false,
+  "image": "https://picsum.photos/seed/1017/480/360",
+  "shortDescription": "Sennheiser Momentum 4 Wireless \u2014 great pick in headphones.",
+  "highlights": [
+   "Sennheiser quality",
+   "1-year warranty",
+   "Free shipping on orders $35+"
+  ]
+ },
+ {
+  "sku": "BS1018",
+  "name": "Tune 770NC Wireless",
+  "brand": "JBL",
+  "category": "headphones",
+  "price": 129.95,
+  "salePrice": 79.95,
+  "rating": 4.1,
+  "reviewCount": 4095,
+  "inStock": true,
+  "image": "https://picsum.photos/seed/1018/480/360",
+  "shortDescription": "JBL Tune 770NC Wireless \u2014 great pick in headphones.",
+  "highlights": [
+   "JBL quality",
+   "1-year warranty",
+   "Free shipping on orders $35+"
+  ]
+ },
+ {
+  "sku": "BS1019",
+  "name": "27 cu. ft. Side-by-Side Refrigerator",
+  "brand": "LG",
+  "category": "appliances",
+  "price": 1499.99,
+  "salePrice": 1099.99,
+  "rating": 4.6,
+  "reviewCount": 2398,
+  "inStock": true,
+  "image": "https://picsum.photos/seed/1019/480/360",
+  "shortDescription": "LG 27 cu. ft. Side-by-Side Refrigerator \u2014 great pick in appliances.",
+  "highlights": [
+   "LG quality",
+   "1-year warranty",
+   "Free shipping on orders $35+"
+  ]
+ },
+ {
+  "sku": "BS1020",
+  "name": "Bespoke 4-Door French Door Refrigerator",
+  "brand": "Samsung",
+  "category": "appliances",
+  "price": 3299.99,
+  "salePrice": 2399.99,
+  "rating": 3.9,
+  "reviewCount": 4233,
+  "inStock": true,
+  "image": "https://picsum.photos/seed/1020/480/360",
+  "shortDescription": "Samsung Bespoke 4-Door French Door Refrigerator \u2014 great pick in appliances.",
+  "highlights": [
+   "Samsung quality",
+   "1-year warranty",
+   "Free shipping on orders $35+"
+  ]
+ },
+ {
+  "sku": "BS1021",
+  "name": "Top Load Washer 4.5 cu. ft.",
+  "brand": "Whirlpool",
+  "category": "appliances",
+  "price": 849.99,
+  "salePrice": 599.99,
+  "rating": 4.6,
+  "reviewCount": 1285,
+  "inStock": true,
+  "image": "https://picsum.photos/seed/1021/480/360",
+  "shortDescription": "Whirlpool Top Load Washer 4.5 cu. ft. \u2014 great pick in appliances.",
+  "highlights": [
+   "Whirlpool quality",
+   "1-year warranty",
+   "Free shipping on orders $35+"
+  ]
+ },
+ {
+  "sku": "BS1022",
+  "name": "Profile Smart Dishwasher",
+  "brand": "GE",
+  "category": "appliances",
+  "price": 1099.99,
+  "salePrice": 799.99,
+  "rating": 4.3,
+  "reviewCount": 675,
+  "inStock": true,
+  "image": "https://picsum.photos/seed/1022/480/360",
+  "shortDescription": "GE Profile Smart Dishwasher \u2014 great pick in appliances.",
+  "highlights": [
+   "GE quality",
+   "1-year warranty",
+   "Free shipping on orders $35+"
+  ]
+ },
+ {
+  "sku": "BS1023",
+  "name": "Artisan 5-Qt Stand Mixer",
+  "brand": "KitchenAid",
+  "category": "appliances",
+  "price": 449.99,
+  "salePrice": 329.99,
+  "rating": 4.4,
+  "reviewCount": 2610,
+  "inStock": true,
+  "image": "https://picsum.photos/seed/1023/480/360",
+  "shortDescription": "KitchenAid Artisan 5-Qt Stand Mixer \u2014 great pick in appliances.",
+  "highlights": [
+   "KitchenAid quality",
+   "1-year warranty",
+   "Free shipping on orders $35+"
+  ]
+ },
+ {
+  "sku": "BS1024",
+  "name": "Foodi 10-in-1 Air Fryer",
+  "brand": "Ninja",
+  "category": "appliances",
+  "price": 229.99,
+  "salePrice": 149.99,
+  "rating": 4.2,
+  "reviewCount": 4108,
+  "inStock": true,
+  "image": "https://picsum.photos/seed/1024/480/360",
+  "shortDescription": "Ninja Foodi 10-in-1 Air Fryer \u2014 great pick in appliances.",
+  "highlights": [
+   "Ninja quality",
+   "1-year warranty",
+   "Free shipping on orders $35+"
+  ]
+ },
+ {
+  "sku": "BS1025",
+  "name": "PlayStation 5 Slim Console",
+  "brand": "Sony",
+  "category": "gaming",
+  "price": 499.99,
+  "salePrice": null,
+  "rating": 4.3,
+  "reviewCount": 806,
+  "inStock": true,
+  "image": "https://picsum.photos/seed/1025/480/360",
+  "shortDescription": "Sony PlayStation 5 Slim Console \u2014 great pick in gaming.",
+  "highlights": [
+   "Sony quality",
+   "1-year warranty",
+   "Free shipping on orders $35+"
+  ]
+ },
+ {
+  "sku": "BS1026",
+  "name": "Xbox Series X 1TB",
+  "brand": "Microsoft",
+  "category": "gaming",
+  "price": 499.99,
+  "salePrice": 449.99,
+  "rating": 4.3,
+  "reviewCount": 572,
+  "inStock": false,
+  "image": "https://picsum.photos/seed/1026/480/360",
+  "shortDescription": "Microsoft Xbox Series X 1TB \u2014 great pick in gaming.",
+  "highlights": [
+   "Microsoft quality",
+   "1-year warranty",
+   "Free shipping on orders $35+"
+  ]
+ },
+ {
+  "sku": "BS1027",
+  "name": "Switch OLED Model",
+  "brand": "Nintendo",
+  "category": "gaming",
+  "price": 349.99,
+  "salePrice": null,
+  "rating": 4.6,
+  "reviewCount": 4774,
+  "inStock": true,
+  "image": "https://picsum.photos/seed/1027/480/360",
+  "shortDescription": "Nintendo Switch OLED Model \u2014 great pick in gaming.",
+  "highlights": [
+   "Nintendo quality",
+   "1-year warranty",
+   "Free shipping on orders $35+"
+  ]
+ },
+ {
+  "sku": "BS1028",
+  "name": "G Pro X Superlight 2 Mouse",
+  "brand": "Logitech",
+  "category": "gaming",
+  "price": 159.99,
+  "salePrice": 129.99,
+  "rating": 4.7,
+  "reviewCount": 2371,
+  "inStock": true,
+  "image": "https://picsum.photos/seed/1028/480/360",
+  "shortDescription": "Logitech G Pro X Superlight 2 Mouse \u2014 great pick in gaming.",
+  "highlights": [
+   "Logitech quality",
+   "1-year warranty",
+   "Free shipping on orders $35+"
+  ]
+ },
+ {
+  "sku": "BS1029",
+  "name": "BlackWidow V4 Pro Keyboard",
+  "brand": "Razer",
+  "category": "gaming",
+  "price": 229.99,
+  "salePrice": 179.99,
+  "rating": 4.8,
+  "reviewCount": 2882,
+  "inStock": false,
+  "image": "https://picsum.photos/seed/1029/480/360",
+  "shortDescription": "Razer BlackWidow V4 Pro Keyboard \u2014 great pick in gaming.",
+  "highlights": [
+   "Razer quality",
+   "1-year warranty",
+   "Free shipping on orders $35+"
+  ]
+ },
+ {
+  "sku": "BS1030",
+  "name": "Quest 3 128GB VR Headset",
+  "brand": "Meta",
+  "category": "gaming",
+  "price": 499.99,
+  "salePrice": 429.99,
+  "rating": 4.3,
+  "reviewCount": 1416,
+  "inStock": true,
+  "image": "https://picsum.photos/seed/1030/480/360",
+  "shortDescription": "Meta Quest 3 128GB VR Headset \u2014 great pick in gaming.",
+  "highlights": [
+   "Meta quality",
+   "1-year warranty",
+   "Free shipping on orders $35+"
+  ]
+ }
+]

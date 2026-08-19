@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jcr:root xmlns:sling="http://sling.apache.org/jcr/sling/1.0" xmlns:cq="http://www.day.com/jcr/cq/1.0"
+          xmlns:jcr="http://www.jcp.org/jcr/1.0" xmlns:nt="http://www.jcp.org/jcr/nt/1.0"
+    jcr:primaryType="cq:Page">
+    <jcr:content jcr:primaryType="cq:PageContent" jcr:title="Search" hideInNav="{Boolean}true"
+        sling:resourceType="blueshelf/components/page"
+        cq:template="/conf/blueshelf/settings/wcm/templates/content-page">
+        <root jcr:primaryType="nt:unstructured" sling:resourceType="blueshelf/components/container">
+            <search jcr:primaryType="nt:unstructured" sling:resourceType="blueshelf/components/search-box" resultsPage="/content/blueshelf/us/en/search"/>
+            <results jcr:primaryType="nt:unstructured" sling:resourceType="blueshelf/components/product-list"
+                     jcr:title="Search results" useQueryParam="{Boolean}true" limit="{Long}12" productPagePath="/content/blueshelf/us/en/product"/>
+        </root>
+    </jcr:content>
+</jcr:root>

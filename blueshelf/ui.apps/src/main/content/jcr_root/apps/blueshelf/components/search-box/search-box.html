@@ -1,0 +1,5 @@
+<!--/* Plain GET form to the results page: works without JS, cacheable, SEO-friendly. Type-ahead uses the .search.json servlet. */-->
+<form class="search" method="get" action="${properties.resultsPage @ context='uri'}.html" data-search-endpoint="${properties.resultsPage @ context='uri'}.search.json">
+    <input class="search__input" type="search" name="q" placeholder="${properties.placeholder || 'Search products'}" autocomplete="off" required>
+    <button class="search__btn" type="submit">Search</button>
+</form>

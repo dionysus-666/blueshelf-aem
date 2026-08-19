@@ -5,7 +5,7 @@ ROOT="$(cd "$(dirname "$0")" && pwd)"
 export JAVA_HOME=/opt/homebrew/opt/openjdk@21/libexec/openjdk.jdk/Contents/Home
 export PATH="$JAVA_HOME/bin:$PATH"
 case "${1:-}" in
-  up)      (cd "$ROOT/infra" && docker compose up -d) ;;
+  up)      (cd "$ROOT/infra" && docker compose up -d --build) ;;
   down)    (cd "$ROOT/infra" && docker compose down) ;;
   build)   (cd "$ROOT/blueshelf" && mvn -B clean install) ;;
   deploy)  (cd "$ROOT/blueshelf" && mvn -B clean install -PautoInstallSinglePackage) ;;

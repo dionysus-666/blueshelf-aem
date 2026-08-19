@@ -9,3 +9,4 @@ node_modules/
 .env.local
 blueshelf/ui.apps/src/main/content/jcr_root/apps/blueshelf/clientlibs/author/
 blueshelf/ui.frontend/node/
+catalog-api/target/
