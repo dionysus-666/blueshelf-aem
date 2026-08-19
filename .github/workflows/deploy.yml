@@ -57,7 +57,7 @@ jobs:
           scp blueshelf/all/target/blueshelf.all-*.zip $H:~/blueshelf/all.zip
           ssh $H "for p in 4502 4503; do for i in \$(seq 1 60); do curl -fs -u admin:$PW http://localhost:\$p/system/console/bundles.json | grep -q 'all .* bundles active' && break; sleep 5; done; done
             for p in 4502 4503; do curl -fs -u admin:$PW -F file=@\$HOME/blueshelf/all.zip -F force=true http://localhost:\$p/bin/cpm/package.upload.json | head -c 200; echo; \
-              curl -fs -u admin:$PW -X POST http://localhost:\$p/bin/cpm/package.install.json/com.blueshelf/blueshelf.all/1.0.0-SNAPSHOT | head -c 200; echo; done"
+              curl -fs -u admin:$PW -X POST http://localhost:\$p/bin/cpm/package.install.json/com.blueshelf/blueshelf.all-1.0.0-SNAPSHOT.zip | head -c 200; echo; done"
       - name: Smoke test via dispatcher
         if: env.DEPLOY_HOST != ''
         run: |

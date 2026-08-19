@@ -44,7 +44,7 @@ jobs:
         run: |
           for i in $(seq 1 60); do curl -fs -u admin:admin http://localhost:4503/system/console/bundles.json | grep -q '"status":"Bundle information: [0-9]* bundles in total - all [0-9]* bundles active' && break; sleep 5; done
           curl -fs -u admin:admin -F "file=@$(ls blueshelf/all/target/blueshelf.all-*.zip)" -F force=true http://localhost:4503/bin/cpm/package.upload.json | head -c 300; echo
-          curl -fs -u admin:admin -X POST http://localhost:4503/bin/cpm/package.install.json/com.blueshelf/blueshelf.all/1.0.0-SNAPSHOT | head -c 300; echo
+          curl -fs -u admin:admin -X POST http://localhost:4503/bin/cpm/package.install.json/com.blueshelf/blueshelf.all-1.0.0-SNAPSHOT.zip | head -c 300; echo
           for i in $(seq 1 60); do curl -fs http://localhost:4503/content/blueshelf/us/en.model.json | grep -q '":type"' && break; sleep 5; done
           curl -fs http://localhost:4503/content/blueshelf/us/en.model.json | head -c 200; echo
           for i in $(seq 1 30); do curl -fs http://localhost:8081/api/products?size=1 | grep -q sku && break; sleep 3; done
