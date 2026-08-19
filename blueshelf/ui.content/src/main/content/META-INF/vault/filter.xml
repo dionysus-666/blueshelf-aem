@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<workspaceFilter version="1.0">
+    <!-- mode="merge": add what's missing, never touch existing nodes. Authors own /content. -->
+    <filter root="/content/blueshelf" mode="merge"/>
+</workspaceFilter>

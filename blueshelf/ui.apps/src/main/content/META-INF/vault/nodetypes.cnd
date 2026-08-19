@@ -1,0 +1,32 @@
+/*
+ * Minimal CQ (AEM) node types so our content packages are byte-for-byte the same shape as real AEM.
+ * Registered at bundle start via the `Sling-Nodetypes` MANIFEST header (that is also how AEM does it).
+ *
+ * cq:Page        = a page node; its only "real" content is the jcr:content child
+ * cq:PageContent = the jcr:content node carrying sling:resourceType, jcr:title, etc.
+ * cq:Component   = a component definition node under /apps (jcr:title, componentGroup, ...)
+ */
+<cq='http://www.day.com/jcr/cq/1.0'>
+<nt='http://www.jcp.org/jcr/nt/1.0'>
+<mix='http://www.jcp.org/jcr/mix/1.0'>
+<jcr='http://www.jcp.org/jcr/1.0'>
+
+[cq:Page] > nt:hierarchyNode
+  orderable
+  + jcr:content (nt:base) = nt:unstructured copy primary
+  + * (nt:base) = nt:base version
+
+[cq:PageContent] > nt:unstructured, mix:title, mix:created, mix:lastModified
+  orderable
+
+[cq:Component] > nt:folder, mix:title
+  orderable
+  - * (undefined) multiple
+  - * (undefined)
+  + * (nt:base) = nt:base multiple version
+
+[cq:Template] > nt:hierarchyNode, mix:title
+  orderable
+  - * (undefined) multiple
+  - * (undefined)
+  + * (nt:base) = nt:base multiple version

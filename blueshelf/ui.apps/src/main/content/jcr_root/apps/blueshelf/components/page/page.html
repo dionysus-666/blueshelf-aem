@@ -1,0 +1,28 @@
+<!--/*
+  Page component. Script name == component folder name => this is the DEFAULT script.
+  Sling picks the script by: resourceType -> selectors -> extension/method.
+  e.g. /content/blueshelf/us/en.html            -> page.html
+       /content/blueshelf/us/en.model.json      -> Sling Model Exporter (no script needed)
+*/-->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>${properties.jcr:title @ context='text'} | BlueShelf</title>
+    <link rel="stylesheet" href="/apps/blueshelf/clientlibs/site/site.css">
+</head>
+<body class="page">
+    <header class="site-header">
+        <a class="logo" href="/content/blueshelf/us/en.html">BlueShelf</a>
+        <nav><a href="/content/blueshelf/us/en/tvs.html">TVs</a> <a href="/content/blueshelf/us/en/deals.html">Deals</a></nav>
+    </header>
+    <main>
+        <!--/* Include the child "root" container; each child decides its own renderer via sling:resourceType */-->
+        <sly data-sly-resource="${'root' @ resourceType='blueshelf/components/container'}"></sly>
+    </main>
+    <footer class="site-footer">
+        <small>BlueShelf demo &middot; rendered by ${resource.resourceType} &middot; path ${resource.path}</small>
+    </footer>
+</body>
+</html>

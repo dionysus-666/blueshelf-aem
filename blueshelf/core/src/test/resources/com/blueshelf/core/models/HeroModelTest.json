@@ -1,0 +1,33 @@
+{
+  "jcr:primaryType": "cq:Page",
+  "jcr:content": {
+    "jcr:primaryType": "cq:PageContent",
+    "jcr:title": "Home",
+    "sling:resourceType": "blueshelf/components/page",
+    "root": {
+      "jcr:primaryType": "nt:unstructured",
+      "sling:resourceType": "blueshelf/components/container",
+      "hero": {
+        "jcr:primaryType": "nt:unstructured",
+        "sling:resourceType": "blueshelf/components/hero",
+        "jcr:title": "Back to School TV Deals",
+        "subtitle": "Save up to 40%",
+        "ctaLabel": "Shop now",
+        "ctaLink": "/content/blueshelf/us/en/tvs",
+        "theme": "yellow"
+      },
+      "hero-minimal": {
+        "jcr:primaryType": "nt:unstructured",
+        "sling:resourceType": "blueshelf/components/hero",
+        "jcr:title": "Minimal"
+      },
+      "hero-external": {
+        "jcr:primaryType": "nt:unstructured",
+        "sling:resourceType": "blueshelf/components/hero",
+        "jcr:title": "Ext",
+        "ctaLabel": "Go",
+        "ctaLink": "https://www.bestbuy.com/"
+      }
+    }
+  }
+}

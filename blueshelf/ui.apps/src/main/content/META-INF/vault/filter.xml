@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Paths this package OWNS. Install = replace these subtrees. -->
+<workspaceFilter version="1.0">
+    <filter root="/apps/blueshelf"/>
+    <filter root="/apps/cq"/>
+</workspaceFilter>

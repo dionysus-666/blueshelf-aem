@@ -1,0 +1,42 @@
+# Local "AEM-like" topology.
+#   author  -> http://localhost:4502   (AEM author default port)
+#   publish -> http://localhost:4503   (AEM publish default port)
+# Both are Apache Sling Starter 14 = Felix OSGi + Oak JCR + Sling + HTL + Sling Models,
+# i.e. the open-source engine AEM is built on. Credentials: admin / admin.
+#
+# GOTCHA (AEM): author & publish are *separate repositories*. Content moves author->publish
+# only by replication/activation. We model that honestly: two independent containers.
+services:
+  author:
+    image: apache/sling:14
+    container_name: blueshelf-author
+    ports:
+      - "4502:8080"
+    volumes:
+      - author-repo:/opt/sling/sling
+    environment:
+      - JAVA_OPTS=-Xmx1g -Dsling.run.modes=author,local
+    healthcheck:
+      test: ["CMD-SHELL", "curl -fs -u admin:admin http://localhost:8080/system/console/bundles.json | grep -q '\"state\":\"Active\"' || exit 1"]
+      interval: 10s
+      timeout: 5s
+      retries: 30
+
+  publish:
+    image: apache/sling:14
+    container_name: blueshelf-publish
+    ports:
+      - "4503:8080"
+    volumes:
+      - publish-repo:/opt/sling/sling
+    environment:
+      - JAVA_OPTS=-Xmx1g -Dsling.run.modes=publish,local
+    healthcheck:
+      test: ["CMD-SHELL", "curl -fs -u admin:admin http://localhost:8080/system/console/bundles.json | grep -q '\"state\":\"Active\"' || exit 1"]
+      interval: 10s
+      timeout: 5s
+      retries: 30
+
+volumes:
+  author-repo:
+  publish-repo:

@@ -1,0 +1,9 @@
+<!--/*
+  Container = AEM's "parsys"/responsive grid in 6 lines: iterate children and let Sling render each
+  one by its own sling:resourceType. This is THE composition primitive of AEM pages.
+*/-->
+<div class="container">
+    <sly data-sly-list.child="${resource.listChildren}">
+        <sly data-sly-resource="${child}"></sly>
+    </sly>
+</div>

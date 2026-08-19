@@ -1,0 +1,101 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  Parent POM — mirrors the AEM Project Archetype layout:
+    core        : OSGi bundle (Java) -> Sling Models, OSGi services, servlets
+    ui.apps     : content package -> /apps/blueshelf (components, HTL, dialogs, templates)
+    ui.content  : content package -> /content/blueshelf (sample pages)  [mutable content]
+    ui.config   : content package -> OSGi configs per runmode             (later)
+    all         : container package that embeds everything; THE deployable
+
+  GOTCHA (AEM): Cloud Manager deploys only the `all` package. `/apps` is immutable at runtime
+  (pipeline-only), `/content` & `/conf` are mutable. Keep code and content in separate packages.
+-->
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+  <modelVersion>4.0.0</modelVersion>
+
+  <groupId>com.blueshelf</groupId>
+  <artifactId>blueshelf</artifactId>
+  <version>1.0.0-SNAPSHOT</version>
+  <packaging>pom</packaging>
+  <name>BlueShelf - Reactor</name>
+
+  <modules>
+    <module>core</module>
+    <module>ui.apps</module>
+    <module>ui.content</module>
+    <module>all</module>
+  </modules>
+
+  <properties>
+    <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+    <maven.compiler.release>17</maven.compiler.release>
+
+    <!-- target instance (AEM muscle memory: author 4502, publish 4503) -->
+    <sling.host>localhost</sling.host>
+    <sling.port>4502</sling.port>
+    <sling.publish.port>4503</sling.publish.port>
+    <sling.user>admin</sling.user>
+    <sling.password>admin</sling.password>
+
+    <!-- versions: chosen to be compatible with BOTH Sling Starter 14 and AEMaaCS -->
+    <sling.api.version>2.27.6</sling.api.version>
+    <sling.models.api.version>1.5.4</sling.models.api.version>
+    <bnd.version>7.0.0</bnd.version>
+    <filevault.plugin.version>1.4.0</filevault.plugin.version>
+    <wcmio.cpm.version>2.5.0</wcmio.cpm.version>
+  </properties>
+
+  <dependencyManagement>
+    <dependencies>
+      <!-- OSGi annotations (compile-time only; bnd turns them into DS XML + MANIFEST) -->
+      <dependency><groupId>org.osgi</groupId><artifactId>org.osgi.annotation.versioning</artifactId><version>1.1.2</version><scope>provided</scope></dependency>
+      <dependency><groupId>org.osgi</groupId><artifactId>org.osgi.annotation.bundle</artifactId><version>2.0.0</version><scope>provided</scope></dependency>
+      <dependency><groupId>org.osgi</groupId><artifactId>org.osgi.service.component.annotations</artifactId><version>1.5.1</version><scope>provided</scope></dependency>
+      <dependency><groupId>org.osgi</groupId><artifactId>org.osgi.service.metatype.annotations</artifactId><version>1.4.1</version><scope>provided</scope></dependency>
+      <dependency><groupId>org.osgi</groupId><artifactId>org.osgi.service.component</artifactId><version>1.5.1</version><scope>provided</scope></dependency>
+      <dependency><groupId>org.osgi</groupId><artifactId>org.osgi.framework</artifactId><version>1.10.0</version><scope>provided</scope></dependency>
+      <dependency><groupId>org.osgi</groupId><artifactId>org.osgi.util.tracker</artifactId><version>1.5.4</version><scope>provided</scope></dependency>
+
+      <!-- Sling / JCR APIs -->
+      <dependency><groupId>org.apache.sling</groupId><artifactId>org.apache.sling.api</artifactId><version>${sling.api.version}</version><scope>provided</scope></dependency>
+      <dependency><groupId>org.apache.sling</groupId><artifactId>org.apache.sling.models.api</artifactId><version>${sling.models.api.version}</version><scope>provided</scope></dependency>
+      <dependency><groupId>org.apache.sling</groupId><artifactId>org.apache.sling.servlets.annotations</artifactId><version>1.2.6</version><scope>provided</scope></dependency>
+      <dependency><groupId>org.apache.sling</groupId><artifactId>org.apache.sling.commons.osgi</artifactId><version>2.4.2</version><scope>provided</scope></dependency>
+      <dependency><groupId>org.apache.sling</groupId><artifactId>org.apache.sling.scripting.sightly.runtime</artifactId><version>1.2.6-1.4.0</version><scope>provided</scope></dependency>
+      <dependency><groupId>javax.jcr</groupId><artifactId>jcr</artifactId><version>2.0</version><scope>provided</scope></dependency>
+      <dependency><groupId>javax.servlet</groupId><artifactId>javax.servlet-api</artifactId><version>3.1.0</version><scope>provided</scope></dependency>
+      <dependency><groupId>javax.annotation</groupId><artifactId>javax.annotation-api</artifactId><version>1.3.2</version><scope>provided</scope></dependency>
+      <dependency><groupId>javax.inject</groupId><artifactId>javax.inject</artifactId><version>1</version><scope>provided</scope></dependency>
+      <dependency><groupId>com.fasterxml.jackson.core</groupId><artifactId>jackson-annotations</artifactId><version>2.17.0</version><scope>provided</scope></dependency>
+      <dependency><groupId>com.fasterxml.jackson.core</groupId><artifactId>jackson-databind</artifactId><version>2.17.0</version><scope>provided</scope></dependency>
+      <dependency><groupId>org.slf4j</groupId><artifactId>slf4j-api</artifactId><version>1.7.36</version><scope>provided</scope></dependency>
+      <dependency><groupId>org.apache.commons</groupId><artifactId>commons-lang3</artifactId><version>3.14.0</version><scope>provided</scope></dependency>
+      <dependency><groupId>org.jetbrains</groupId><artifactId>annotations</artifactId><version>24.1.0</version><scope>provided</scope></dependency>
+
+      <!-- Testing: JUnit5 + Mockito + wcm.io AEM/Sling Mocks (the industry-standard way to unit test AEM) -->
+      <dependency><groupId>org.junit</groupId><artifactId>junit-bom</artifactId><version>5.10.2</version><type>pom</type><scope>import</scope></dependency>
+      <dependency><groupId>org.mockito</groupId><artifactId>mockito-core</artifactId><version>5.11.0</version><scope>test</scope></dependency>
+      <dependency><groupId>org.mockito</groupId><artifactId>mockito-junit-jupiter</artifactId><version>5.11.0</version><scope>test</scope></dependency>
+      <dependency><groupId>org.apache.sling</groupId><artifactId>org.apache.sling.testing.sling-mock.junit5</artifactId><version>3.6.2</version><scope>test</scope></dependency>
+      <dependency><groupId>org.apache.sling</groupId><artifactId>org.apache.sling.testing.sling-mock-oak</artifactId><version>3.6.2</version><scope>test</scope></dependency>
+      <dependency><groupId>org.slf4j</groupId><artifactId>slf4j-simple</artifactId><version>1.7.36</version><scope>test</scope></dependency>
+    </dependencies>
+  </dependencyManagement>
+
+  <build>
+    <pluginManagement>
+      <plugins>
+        <plugin><groupId>org.apache.maven.plugins</groupId><artifactId>maven-compiler-plugin</artifactId><version>3.13.0</version></plugin>
+        <plugin><groupId>org.apache.maven.plugins</groupId><artifactId>maven-surefire-plugin</artifactId><version>3.2.5</version></plugin>
+        <plugin><groupId>org.apache.maven.plugins</groupId><artifactId>maven-jar-plugin</artifactId><version>3.4.1</version></plugin>
+        <plugin><groupId>org.apache.maven.plugins</groupId><artifactId>maven-resources-plugin</artifactId><version>3.3.1</version></plugin>
+        <plugin><groupId>biz.aQute.bnd</groupId><artifactId>bnd-maven-plugin</artifactId><version>${bnd.version}</version></plugin>
+        <plugin><groupId>org.apache.jackrabbit</groupId><artifactId>filevault-package-maven-plugin</artifactId><version>${filevault.plugin.version}</version></plugin>
+        <plugin><groupId>io.wcm.maven.plugins</groupId><artifactId>wcmio-content-package-maven-plugin</artifactId><version>${wcmio.cpm.version}</version></plugin>
+        <plugin><groupId>org.apache.sling</groupId><artifactId>sling-maven-plugin</artifactId><version>3.0.4</version></plugin>
+        <plugin><groupId>org.jacoco</groupId><artifactId>jacoco-maven-plugin</artifactId><version>0.8.12</version></plugin>
+      </plugins>
+    </pluginManagement>
+  </build>
+</project>

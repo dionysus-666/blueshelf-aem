@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  all = container package. Embeds ui.apps + ui.content (and core via ui.apps). This single zip is
+  what Cloud Manager / ops deploys. `mvn clean install -PautoInstallSinglePackage` from the root.
+-->
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+  <modelVersion>4.0.0</modelVersion>
+  <parent>
+    <groupId>com.blueshelf</groupId>
+    <artifactId>blueshelf</artifactId>
+    <version>1.0.0-SNAPSHOT</version>
+  </parent>
+  <artifactId>blueshelf.all</artifactId>
+  <packaging>content-package</packaging>
+  <name>BlueShelf - All</name>
+
+  <build>
+    <plugins>
+      <plugin>
+        <groupId>org.apache.jackrabbit</groupId>
+        <artifactId>filevault-package-maven-plugin</artifactId>
+        <extensions>true</extensions>
+        <configuration>
+          <group>com.blueshelf</group>
+          <name>blueshelf.all</name>
+          <packageType>container</packageType>
+          <!-- sub-packages are placed under /apps/blueshelf-packages/*/install where the JCR installer picks them up -->
+          <embeddeds>
+            <embedded><groupId>com.blueshelf</groupId><artifactId>blueshelf.core</artifactId><target>/apps/blueshelf-packages/application/install</target></embedded>
+            <embedded><groupId>com.blueshelf</groupId><artifactId>blueshelf.ui.apps</artifactId><type>zip</type><target>/apps/blueshelf-packages/application/install</target></embedded>
+            <embedded><groupId>com.blueshelf</groupId><artifactId>blueshelf.ui.content</artifactId><type>zip</type><target>/apps/blueshelf-packages/content/install</target></embedded>
+          </embeddeds>
+        </configuration>
+      </plugin>
+      <plugin>
+        <groupId>io.wcm.maven.plugins</groupId>
+        <artifactId>wcmio-content-package-maven-plugin</artifactId>
+        <extensions>true</extensions>
+        <configuration>
+          <packageManagerName>composum</packageManagerName>
+          <serviceURL>http://${sling.host}:${sling.port}/bin/cpm/package.service.html</serviceURL>
+          <userId>${sling.user}</userId>
+          <password>${sling.password}</password>
+          <force>true</force>
+        </configuration>
+      </plugin>
+    </plugins>
+  </build>
+
+  <dependencies>
+    <dependency><groupId>com.blueshelf</groupId><artifactId>blueshelf.core</artifactId><version>${project.version}</version></dependency>
+    <dependency><groupId>com.blueshelf</groupId><artifactId>blueshelf.ui.apps</artifactId><version>${project.version}</version><type>zip</type></dependency>
+    <dependency><groupId>com.blueshelf</groupId><artifactId>blueshelf.ui.content</artifactId><version>${project.version}</version><type>zip</type></dependency>
+  </dependencies>
+
+  <profiles>
+    <profile>
+      <id>autoInstallSinglePackage</id>
+      <build><plugins><plugin>
+        <groupId>io.wcm.maven.plugins</groupId>
+        <artifactId>wcmio-content-package-maven-plugin</artifactId>
+        <executions><execution><id>install-package</id><goals><goal>install</goal></goals></execution></executions>
+      </plugin></plugins></build>
+    </profile>
+  </profiles>
+</project>

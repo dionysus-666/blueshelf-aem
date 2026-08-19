@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jcr:root xmlns:sling="http://sling.apache.org/jcr/sling/1.0" xmlns:cq="http://www.day.com/jcr/cq/1.0"
+          xmlns:jcr="http://www.jcp.org/jcr/1.0" xmlns:nt="http://www.jcp.org/jcr/nt/1.0"
+    jcr:primaryType="cq:Page">
+    <jcr:content
+        jcr:primaryType="cq:PageContent"
+        jcr:title="TVs"
+        sling:resourceType="blueshelf/components/page">
+        <root jcr:primaryType="nt:unstructured" sling:resourceType="blueshelf/components/container">
+            <hero
+                jcr:primaryType="nt:unstructured"
+                sling:resourceType="blueshelf/components/hero"
+                jcr:title="TVs &amp; Home Theater"
+                subtitle="OLED, QLED, 4K, 8K"
+                theme="blue"/>
+            <text
+                jcr:primaryType="nt:unstructured"
+                sling:resourceType="blueshelf/components/text"
+                text="&lt;p&gt;Product list component coming in Phase 2 (Catalog API).&lt;/p&gt;"/>
+        </root>
+    </jcr:content>
+</jcr:root>

@@ -1,0 +1,13 @@
+<!--/*
+  HTL + Sling Model. data-sly-use instantiates the model by adapting the current resource/request.
+  Everything output via ${} is auto-escaped for its context (html text, attribute, href...).
+  Correlation: JSX with automatic escaping, but no JS allowed in the template on purpose.
+*/-->
+<section class="hero hero--${hero.theme}" data-sly-use.hero="com.blueshelf.core.models.HeroModel"
+         data-sly-test="${hero.title}">
+    <h1 class="hero__title">${hero.title}</h1>
+    <p class="hero__subtitle" data-sly-test="${hero.subtitle}">${hero.subtitle}</p>
+    <a class="hero__cta" data-sly-test="${hero.hasCta}" href="${hero.ctaLink @ context='uri'}">${hero.ctaLabel}</a>
+</section>
+<!--/* Author-time hint when the component is empty (AEM shows a placeholder via cq:editConfig) */-->
+<div class="hero hero--empty" data-sly-test="${!hero.title}">Hero: configure a title</div>
