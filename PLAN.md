@@ -141,6 +141,6 @@ Progress is tracked at the bottom of this file.
 - [x] Phase 3: proxy/inherited components, Style System, clientlibs (cq:ClientLibraryFolder + servlet), ui.frontend two-entry build (NOTES/04)
 - [x] Phase 4: page/container exporters (SPA JSON contract) + Next.js storefront with ISR & revalidation (NOTES/05). Vercel deploy happens in Phase 6 once publish is reachable from the internet.
 - [x] Phase 5: mini-dispatcher (real dispatcher.any semantics: filters, cache rules, statfiles, ignoreUrlParams, TTL, stale-on-error, flush protocol) + flush agent + storefront revalidation (NOTES/06)
-- [ ] Phase 6: CI/CD (GitHub Actions = Cloud Manager stand-in) + cloud deploy
+- [x] Phase 6: GitHub Actions CI green (tests 90% cov, aemanalyser gate, dispatcher validator, GHCR images) + deploy workflow ready (NOTES/07). Repo: https://github.com/dionysus-666/blueshelf-aem. Pending from you: a VM (secrets) + Vercel import.
 - [ ] Phase 7: Edge Delivery Services
 - [ ] Phase 8: interview hardening
