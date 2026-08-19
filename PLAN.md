@@ -142,5 +142,6 @@ Progress is tracked at the bottom of this file.
 - [x] Phase 4: page/container exporters (SPA JSON contract) + Next.js storefront with ISR & revalidation (NOTES/05). Vercel deploy happens in Phase 6 once publish is reachable from the internet.
 - [x] Phase 5: mini-dispatcher (real dispatcher.any semantics: filters, cache rules, statfiles, ignoreUrlParams, TTL, stale-on-error, flush protocol) + flush agent + storefront revalidation (NOTES/06)
 - [x] Phase 6: GitHub Actions CI green (tests 90% cov, aemanalyser gate, dispatcher validator, GHCR images) + deploy workflow ready (NOTES/07). Repo: https://github.com/dionysus-666/blueshelf-aem. Pending from you: a VM (secrets) + Vercel import.
-- [ ] Phase 7: Edge Delivery Services
-- [ ] Phase 8: interview hardening
+- [x] Phase 7: EDS repo from adobe/aem-boilerplate + deal-cards block (NOTES/08) — you: install AEM Code Sync app + create da.live site
+- [x] Free hosting: storefront static snapshot → GitHub Pages (live), Codespaces devcontainer for the full stack
+- [x] Phase 8: interview hardening — pitch, Q&A grounded in the project, incident runbooks, gaps list, 2-week drill schedule (NOTES/09), DECISIONS.md, README
