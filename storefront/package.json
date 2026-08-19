@@ -6,7 +6,9 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "eslint"
+    "lint": "eslint",
+    "snapshot": "node scripts/snapshot.mjs",
+    "build:static": "CONTENT_SNAPSHOT=1 STATIC_EXPORT=1 next build"
   },
   "dependencies": {
     "next": "16.3.1",

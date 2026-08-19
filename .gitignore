@@ -16,3 +16,6 @@ catalog-api/target/
 storefront/.next/
 storefront/node_modules/
 storefront/.env.local
+storefront/content-snapshot/
+storefront/public/products.json
+storefront/out/

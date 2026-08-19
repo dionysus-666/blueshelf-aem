@@ -1,0 +1,71 @@
+# Free "production": publish the storefront as a STATIC SNAPSHOT to GitHub Pages.
+#  1. boot publish + catalog-api on the runner (docker compose), install the `all` package on publish
+#  2. crawl the published .model.json (pages, PDPs, products) -> content-snapshot/
+#  3. build Next.js with output=export and deploy to Pages
+# Pattern: "publish to CDN/static" — the content is still authored in AEM, rendered via the SPA JSON contract.
+name: pages
+on:
+  workflow_run:
+    workflows: [ci]
+    types: [completed]
+    branches: [main]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+concurrency: { group: pages, cancel-in-progress: true }
+
+jobs:
+  snapshot-and-deploy:
+    if: github.event_name == 'workflow_dispatch' || github.event.workflow_run.conclusion == 'success'
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-java@v4
+        with: { distribution: temurin, java-version: '21', cache: maven }
+      - uses: actions/setup-node@v4
+        with: { node-version: '20', cache: npm, cache-dependency-path: storefront/package-lock.json }
+
+      - name: Start publish + catalog-api (docker compose)
+        working-directory: infra
+        run: docker compose up -d --build publish catalog-api
+
+      - name: Build the `all` package
+        working-directory: blueshelf
+        run: mvn -B -ntp -DskipTests clean package
+
+      - name: Wait for publish, install package (= deploy to publish)
+        run: |
+          for i in $(seq 1 60); do curl -fs -u admin:admin http://localhost:4503/system/console/bundles.json | grep -q '"status":"Bundle information: [0-9]* bundles in total - all [0-9]* bundles active' && break; sleep 5; done
+          curl -fs -u admin:admin -F "file=@$(ls blueshelf/all/target/blueshelf.all-*.zip)" -F force=true http://localhost:4503/bin/cpm/package.upload.json | head -c 300; echo
+          curl -fs -u admin:admin -X POST http://localhost:4503/bin/cpm/package.install.json/com.blueshelf/blueshelf.all/1.0.0-SNAPSHOT | head -c 300; echo
+          for i in $(seq 1 60); do curl -fs http://localhost:4503/content/blueshelf/us/en.model.json | grep -q '":type"' && break; sleep 5; done
+          curl -fs http://localhost:4503/content/blueshelf/us/en.model.json | head -c 200; echo
+          for i in $(seq 1 30); do curl -fs http://localhost:8081/api/products?size=1 | grep -q sku && break; sleep 3; done
+
+      - name: Crawl published content -> snapshot
+        working-directory: storefront
+        env: { AEM_HOST: 'http://localhost:4503', CATALOG_HOST: 'http://localhost:8081' }
+        run: npm ci && node scripts/snapshot.mjs
+
+      - name: Build static site
+        working-directory: storefront
+        env: { CONTENT_SNAPSHOT: '1', STATIC_EXPORT: '1', NEXT_BASE_PATH: '/blueshelf-aem' }
+        # route handlers (POST /api/revalidate) are not exportable; they only exist for the live (ISR) deployment
+        run: mv src/app/api /tmp/api && npx next build && mv /tmp/api src/app/api && touch out/.nojekyll
+
+      - uses: actions/upload-pages-artifact@v3
+        with: { path: storefront/out }
+      - id: deployment
+        uses: actions/deploy-pages@v4
+
+      - name: Logs on failure
+        if: failure()
+        working-directory: infra
+        run: docker compose logs --tail=100 publish catalog-api

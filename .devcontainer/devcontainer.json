@@ -1,0 +1,18 @@
+{
+  "name": "BlueShelf AEM bootcamp",
+  "image": "mcr.microsoft.com/devcontainers/java:21",
+  "features": {
+    "ghcr.io/devcontainers/features/docker-in-docker:2": {},
+    "ghcr.io/devcontainers/features/node:1": { "version": "20" }
+  },
+  "hostRequirements": { "cpus": 4, "memory": "8gb" },
+  "forwardPorts": [4502, 4503, 8080, 8081, 3000],
+  "portsAttributes": {
+    "4502": { "label": "AEM author (Sling)" },
+    "4503": { "label": "AEM publish (Sling)" },
+    "8080": { "label": "dispatcher (public site)" },
+    "8081": { "label": "catalog-api" },
+    "3000": { "label": "Next.js storefront" }
+  },
+  "postCreateCommand": "sed -i 's#/opt/homebrew/opt/openjdk@21/libexec/openjdk.jdk/Contents/Home#/usr/local/sdkman/candidates/java/current#' dev.sh; echo 'Run: ./dev.sh up && ./dev.sh deploy-all  (then set the 8080 port to Public for a live demo URL)'"
+}

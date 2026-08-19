@@ -2,8 +2,8 @@
 # Dev helper. Usage: ./dev.sh up|down|build|deploy|deploy-publish|deploy-all|bundle|apps|fe|logs|status
 set -euo pipefail
 ROOT="$(cd "$(dirname "$0")" && pwd)"
-export JAVA_HOME=/opt/homebrew/opt/openjdk@21/libexec/openjdk.jdk/Contents/Home
-export PATH="$JAVA_HOME/bin:$PATH"
+JH=/opt/homebrew/opt/openjdk@21/libexec/openjdk.jdk/Contents/Home
+[ -d "$JH" ] && export JAVA_HOME="$JH" && export PATH="$JAVA_HOME/bin:$PATH"   # macOS; in Codespaces the container JDK 21 is used
 case "${1:-}" in
   up)      (cd "$ROOT/infra" && docker compose up -d --build) ;;
   down)    (cd "$ROOT/infra" && docker compose down) ;;
