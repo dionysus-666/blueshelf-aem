@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Style System: groups of styles the author may toggle on a Hero in templates that map this policy. -->
+<jcr:root xmlns:sling="http://sling.apache.org/jcr/sling/1.0" xmlns:cq="http://www.day.com/jcr/cq/1.0"
+          xmlns:jcr="http://www.jcp.org/jcr/1.0" xmlns:nt="http://www.jcp.org/jcr/nt/1.0"
+    jcr:primaryType="nt:unstructured">
+    <default jcr:primaryType="nt:unstructured" jcr:title="Hero default" sling:resourceType="wcm/core/components/policy/policy">
+        <cq:styleGroups jcr:primaryType="nt:unstructured">
+            <item0 jcr:primaryType="nt:unstructured" cq:styleGroupLabel="Layout">
+                <cq:styles jcr:primaryType="nt:unstructured">
+                    <item0 jcr:primaryType="nt:unstructured" cq:styleId="1001" cq:styleLabel="Compact" cq:styleClasses="hero--compact"/>
+                    <item1 jcr:primaryType="nt:unstructured" cq:styleId="1002" cq:styleLabel="Centered" cq:styleClasses="hero--center"/>
+                </cq:styles>
+            </item0>
+            <item1 jcr:primaryType="nt:unstructured" cq:styleGroupLabel="Emphasis">
+                <cq:styles jcr:primaryType="nt:unstructured">
+                    <item0 jcr:primaryType="nt:unstructured" cq:styleId="2001" cq:styleLabel="Dark" cq:styleClasses="hero--dark"/>
+                    <item1 jcr:primaryType="nt:unstructured" cq:styleId="2002" cq:styleLabel="Outlined" cq:styleClasses="hero--outlined"/>
+                </cq:styles>
+            </item1>
+        </cq:styleGroups>
+    </default>
+</jcr:root>

@@ -45,3 +45,4 @@ table.pages th,table.pages td{text-align:left;padding:.5rem .75rem;border-bottom
 table.pages th{background:#f6f8fb;font-size:12px;color:var(--muted)}
 .login{max-width:360px;margin:10vh auto;background:var(--panel);padding:1.5rem;border:1px solid var(--line);border-radius:10px}
 .center{display:flex;align-items:center;justify-content:center;height:100%}
+.stylegroup{border:1px solid var(--line);border-radius:6px;padding:.5rem .75rem;margin:.5rem 0}.stylegroup legend{font-size:12px;font-weight:600;color:var(--muted)}.stylegroup .check{margin:.25rem 0}

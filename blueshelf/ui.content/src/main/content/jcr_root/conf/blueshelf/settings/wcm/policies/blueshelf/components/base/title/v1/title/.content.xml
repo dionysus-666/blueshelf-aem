@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Design-time default for the Title: h2 unless the author overrides in the dialog -->
+<jcr:root xmlns:sling="http://sling.apache.org/jcr/sling/1.0" xmlns:cq="http://www.day.com/jcr/cq/1.0" xmlns:jcr="http://www.jcp.org/jcr/1.0"
+    jcr:primaryType="nt:unstructured">
+    <default jcr:primaryType="nt:unstructured" jcr:title="Title default" sling:resourceType="wcm/core/components/policy/policy" type="h2">
+        <cq:styleGroups jcr:primaryType="nt:unstructured">
+            <item0 jcr:primaryType="nt:unstructured" cq:styleGroupLabel="Alignment">
+                <cq:styles jcr:primaryType="nt:unstructured">
+                    <item0 jcr:primaryType="nt:unstructured" cq:styleId="3001" cq:styleLabel="Centered" cq:styleClasses="cmp-title--center"/>
+                    <item1 jcr:primaryType="nt:unstructured" cq:styleId="3002" cq:styleLabel="Underlined" cq:styleClasses="cmp-title--underline"/>
+                </cq:styles>
+            </item0>
+        </cq:styleGroups>
+    </default>
+</jcr:root>

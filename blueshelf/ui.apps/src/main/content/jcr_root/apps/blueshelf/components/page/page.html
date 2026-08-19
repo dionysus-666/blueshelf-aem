@@ -10,7 +10,8 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>${properties.jcr:title @ context='text'} | BlueShelf</title>
-    <link rel="stylesheet" href="/apps/blueshelf/clientlibs/site/site.css">
+    <!--/* clientlib by category-folder: the servlet concatenates dependencies (blueshelf.base) + own files (AEM: /etc.clientlibs/blueshelf/clientlibs/clientlib-site.css) */-->
+    <link rel="stylesheet" href="/apps/blueshelf/clientlibs/clientlib-site.css">
 </head>
 <body class="page">
     <header class="site-header">
@@ -24,5 +25,6 @@
     <footer class="site-footer">
         <small>BlueShelf demo &middot; rendered by ${resource.resourceType} &middot; path ${resource.path}</small>
     </footer>
+    <script src="/apps/blueshelf/clientlibs/clientlib-site.js" defer></script>
 </body>
 </html>

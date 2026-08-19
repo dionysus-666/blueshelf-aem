@@ -1,5 +1,5 @@
 import { useEffect, useMemo, useRef, useState } from 'react';
-import { getJson, listPages, saveProperties, type Json } from './api';
+import { getJson, listPages, saveProperties, type Json, type StyleOption } from './api';
 
 /**
  * Renders a Granite UI dialog definition (the cq:dialog node tree) as a form.
@@ -49,12 +49,15 @@ function tabsOf(dialog: Json): { title: string; fields: FieldDef[] }[] {
 interface Props {
   dialog: Json;           // cq:dialog JSON
   path: string;           // component node path (values are loaded from + saved to here)
+  styles?: { available: StyleOption[]; selected: string[] };  // Style System options from the template policy
   onSaved: () => void;
   onCancel: () => void;
 }
 
-export function Dialog({ dialog, path, onSaved, onCancel }: Props) {
+export function Dialog({ dialog, path, styles, onSaved, onCancel }: Props) {
   const tabs = useMemo(() => tabsOf(dialog), [dialog]);
+  const hasStyles = !!styles && styles.available.length > 0;
+  const [styleIds, setStyleIds] = useState<string[]>(styles?.selected ?? []);
   const [tab, setTab] = useState(0);
   const [values, setValues] = useState<Record<string, any>>({});
   const [loaded, setLoaded] = useState(false);
@@ -88,6 +91,8 @@ export function Dialog({ dialog, path, onSaved, onCancel }: Props) {
           out[`./${p}`] = v === undefined || v === null ? null : (Array.isArray(v) ? v.map(String) : String(v));
         }
       }
+      // Style System: AEM stores the selected style ids as a String[] named cq:styleIds on the component node
+      if (hasStyles) out['./cq:styleIds'] = styleIds.length ? styleIds : null;
       await saveProperties(path, out, hints);
       onSaved();
     } catch (e: any) { setError(e.message); } finally { setSaving(false); }
@@ -101,15 +106,32 @@ export function Dialog({ dialog, path, onSaved, onCancel }: Props) {
         <strong>{dialog['jcr:title'] || 'Edit'}</strong>
         <code className="muted">{path}</code>
       </header>
-      {tabs.length > 1 && (
+      {(tabs.length > 1 || hasStyles) && (
         <div className="tabs">
           {tabs.map((t, i) => <button key={i} className={i === tab ? 'tab active' : 'tab'} onClick={() => setTab(i)}>{t.title}</button>)}
+          {hasStyles && <button className={tab === tabs.length ? 'tab active' : 'tab'} onClick={() => setTab(tabs.length)}>Styles</button>}
         </div>
       )}
       <div className="dialog__body">
-        {tabs[tab].fields.map((f) => (
+        {tab < tabs.length && tabs[tab].fields.map((f) => (
           <Field key={f.name} f={f} value={values[propName(f)]} onChange={(v) => setValues({ ...values, [propName(f)]: v })} />
         ))}
+        {tab === tabs.length && hasStyles && (
+          <div className="styles">
+            <p className="muted small">Styles come from the template policy (cq:styleGroups). Saved as <code>cq:styleIds</code>; rendered as CSS classes.</p>
+            {[...new Set(styles!.available.map((s) => s.group))].map((g) => (
+              <fieldset key={g} className="stylegroup"><legend>{g || 'Styles'}</legend>
+                {styles!.available.filter((s) => s.group === g).map((s) => (
+                  <label key={s.id} className="check">
+                    <input type="checkbox" checked={styleIds.includes(s.id)}
+                           onChange={(e) => setStyleIds(e.target.checked ? [...styleIds, s.id] : styleIds.filter((x) => x !== s.id))} />
+                    {s.label} <code className="muted">.{s.classes}</code>
+                  </label>
+                ))}
+              </fieldset>
+            ))}
+          </div>
+        )}
       </div>
       {error && <div className="error">{error}</div>}
       <footer className="dialog__foot">

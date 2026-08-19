@@ -7,6 +7,9 @@ node_modules/
 .vscode/
 .env
 .env.local
-blueshelf/ui.apps/src/main/content/jcr_root/apps/blueshelf/clientlibs/author/
+blueshelf/ui.apps/src/main/content/jcr_root/apps/blueshelf/clientlibs/clientlib-author/js/
+blueshelf/ui.apps/src/main/content/jcr_root/apps/blueshelf/clientlibs/clientlib-author/css/
+blueshelf/ui.apps/src/main/content/jcr_root/apps/blueshelf/clientlibs/clientlib-site/js/
+blueshelf/ui.apps/src/main/content/jcr_root/apps/blueshelf/clientlibs/clientlib-site/css/
 blueshelf/ui.frontend/node/
 catalog-api/target/

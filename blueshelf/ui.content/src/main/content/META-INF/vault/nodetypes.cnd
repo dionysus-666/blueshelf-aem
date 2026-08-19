@@ -30,3 +30,16 @@
   - * (undefined) multiple
   - * (undefined)
   + * (nt:base) = nt:base multiple version
+
+[cq:ClientLibraryFolder] > nt:folder
+  orderable
+  - * (undefined) multiple
+  - * (undefined)
+  + * (nt:base) = nt:base multiple version
+  - categories (string) multiple
+  - dependencies (string) multiple
+  - embed (string) multiple
+  - channels (string) multiple
+  - allowProxy (boolean)
+  - jsProcessor (string) multiple
+  - cssProcessor (string) multiple

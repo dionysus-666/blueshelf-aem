@@ -28,7 +28,16 @@
     <policies jcr:primaryType="cq:Page">
         <jcr:content jcr:primaryType="nt:unstructured" sling:resourceType="wcm/core/components/policies/mappings">
             <root jcr:primaryType="nt:unstructured" sling:resourceType="wcm/core/components/policies/mapping"
-                  cq:policy="blueshelf/components/container/default"/>
+                  cq:policy="blueshelf/components/container/default">
+                <!-- per-component policies inside the root container, keyed by resource type path -->
+                <blueshelf jcr:primaryType="nt:unstructured">
+                    <components jcr:primaryType="nt:unstructured">
+                        <hero jcr:primaryType="nt:unstructured" sling:resourceType="wcm/core/components/policies/mapping" cq:policy="blueshelf/components/hero/default"/>
+                        <title jcr:primaryType="nt:unstructured" sling:resourceType="wcm/core/components/policies/mapping" cq:policy="blueshelf/components/base/title/v1/title/default"/>
+                        <product-list jcr:primaryType="nt:unstructured" sling:resourceType="wcm/core/components/policies/mapping" cq:policy="blueshelf/components/product-list/default"/>
+                    </components>
+                </blueshelf>
+            </root>
         </jcr:content>
     </policies>
 </jcr:root>

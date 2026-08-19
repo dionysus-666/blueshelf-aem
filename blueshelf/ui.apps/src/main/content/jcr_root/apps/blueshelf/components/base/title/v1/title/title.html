@@ -1,0 +1,7 @@
+<!--/* Library component: generic, no project CSS classes except its own BEM block. Projects PROXY it. */-->
+<sly data-sly-use.t="com.blueshelf.core.models.TitleModel" data-sly-use.style="com.blueshelf.core.models.StyleModel">
+<div class="cmp-title ${style.cssClasses}" data-sly-test="${t.text}">
+    <h2 data-sly-element="${t.type}" class="cmp-title__text">${t.text}</h2>
+</div>
+<div class="hero--empty" data-sly-test="${!t.text && style.edit}">Title: configure text</div>
+</sly>

@@ -3,7 +3,7 @@
   Everything output via ${} is auto-escaped for its context (html text, attribute, href...).
   Correlation: JSX with automatic escaping, but no JS allowed in the template on purpose.
 */-->
-<section class="hero hero--${hero.theme}" data-sly-use.hero="com.blueshelf.core.models.HeroModel"
+<section class="hero hero--${hero.theme} ${style.cssClasses}" data-sly-use.hero="com.blueshelf.core.models.HeroModel" data-sly-use.style="com.blueshelf.core.models.StyleModel"
          data-sly-test="${hero.title}">
     <h1 class="hero__title">${hero.title}</h1>
     <p class="hero__subtitle" data-sly-test="${hero.subtitle}">${hero.subtitle}</p>

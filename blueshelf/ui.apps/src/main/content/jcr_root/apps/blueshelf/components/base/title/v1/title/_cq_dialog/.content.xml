@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jcr:root xmlns:sling="http://sling.apache.org/jcr/sling/1.0" xmlns:cq="http://www.day.com/jcr/cq/1.0"
+          xmlns:jcr="http://www.jcp.org/jcr/1.0" xmlns:nt="http://www.jcp.org/jcr/nt/1.0"
+    jcr:primaryType="nt:unstructured" jcr:title="Title" sling:resourceType="cq/gui/components/authoring/dialog">
+    <content jcr:primaryType="nt:unstructured" sling:resourceType="granite/ui/components/coral/foundation/container">
+        <items jcr:primaryType="nt:unstructured">
+            <text jcr:primaryType="nt:unstructured" sling:resourceType="granite/ui/components/coral/foundation/form/textfield"
+                  fieldLabel="Title" fieldDescription="Defaults to the page title when empty" name="./jcr:title"/>
+            <type jcr:primaryType="nt:unstructured" sling:resourceType="granite/ui/components/coral/foundation/form/select"
+                  fieldLabel="Heading level" name="./type">
+                <items jcr:primaryType="nt:unstructured">
+                    <h1 jcr:primaryType="nt:unstructured" text="H1" value="h1"/>
+                    <h2 jcr:primaryType="nt:unstructured" text="H2" value="h2"/>
+                    <h3 jcr:primaryType="nt:unstructured" text="H3" value="h3"/>
+                </items>
+            </type>
+        </items>
+    </content>
+</jcr:root>

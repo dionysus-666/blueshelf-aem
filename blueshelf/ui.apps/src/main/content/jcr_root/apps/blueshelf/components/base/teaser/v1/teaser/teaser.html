@@ -1,0 +1,11 @@
+<sly data-sly-use.teaser="com.blueshelf.core.models.TeaserModel" data-sly-use.style="com.blueshelf.core.models.StyleModel">
+<div class="cmp-teaser ${style.cssClasses}" data-sly-test="${!teaser.empty}">
+    <img class="cmp-teaser__image" data-sly-test="${teaser.image}" src="${teaser.image}" alt="${teaser.title}">
+    <div class="cmp-teaser__content">
+        <h3 class="cmp-teaser__title">${teaser.title}</h3>
+        <div class="cmp-teaser__description">${teaser.description @ context='html'}</div>
+        <a class="cmp-teaser__action" data-sly-test="${teaser.link}" href="${teaser.link @ context='uri'}">${teaser.linkText}</a>
+    </div>
+</div>
+<div class="hero--empty" data-sly-test="${teaser.empty && style.edit}">Teaser: configure title/image</div>
+</sly>

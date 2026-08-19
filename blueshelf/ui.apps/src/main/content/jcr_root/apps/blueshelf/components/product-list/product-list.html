@@ -2,7 +2,7 @@
   Product List: authored config (dialog) + live catalog data (service). Model adapted from the REQUEST.
   Note the 3 render states: live/cached, stale (backend down but we have data), unavailable.
 */-->
-<section class="plp" data-sly-use.list="com.blueshelf.core.models.ProductListModel">
+<section class="plp ${style.cssClasses}" data-sly-use.list="com.blueshelf.core.models.ProductListModel" data-sly-use.style="com.blueshelf.core.models.StyleModel">
     <header class="plp__head">
         <h2 data-sly-test="${list.title}">${list.title}</h2>
         <p class="plp__meta" data-sly-test="${list.searchText}">Results for “${list.searchText}” — ${list.total} found</p>

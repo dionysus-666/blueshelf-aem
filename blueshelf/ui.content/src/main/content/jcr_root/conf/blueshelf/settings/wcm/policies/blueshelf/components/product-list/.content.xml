@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jcr:root xmlns:sling="http://sling.apache.org/jcr/sling/1.0" xmlns:cq="http://www.day.com/jcr/cq/1.0" xmlns:jcr="http://www.jcp.org/jcr/1.0"
+    jcr:primaryType="nt:unstructured">
+    <default jcr:primaryType="nt:unstructured" jcr:title="Product list default" sling:resourceType="wcm/core/components/policy/policy">
+        <cq:styleGroups jcr:primaryType="nt:unstructured">
+            <item0 jcr:primaryType="nt:unstructured" cq:styleGroupLabel="Density">
+                <cq:styles jcr:primaryType="nt:unstructured">
+                    <item0 jcr:primaryType="nt:unstructured" cq:styleId="4001" cq:styleLabel="Compact cards" cq:styleClasses="plp--compact"/>
+                    <item1 jcr:primaryType="nt:unstructured" cq:styleId="4002" cq:styleLabel="Carousel row" cq:styleClasses="plp--row"/>
+                </cq:styles>
+            </item0>
+        </cq:styleGroups>
+    </default>
+</jcr:root>

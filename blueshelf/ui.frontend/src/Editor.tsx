@@ -1,5 +1,5 @@
 import { useCallback, useEffect, useRef, useState } from 'react';
-import { addComponent, allowedComponents, deleteNode, getDialog, getJson, listComponents, reorder, replicate, type ComponentDef, type Json } from './api';
+import { addComponent, allowedComponents, deleteNode, getDialog, getJson, getStyles, listComponents, reorder, replicate, type ComponentDef, type Json, type StyleOption } from './api';
 import { Dialog } from './Dialog';
 
 /**
@@ -20,7 +20,7 @@ export function Editor({ page, onOpenSites }: { page: string; onOpenSites: () =>
   const [components, setComponents] = useState<ComponentDef[]>([]);
   const [allowed, setAllowed] = useState<ComponentDef[]>([]);
   const [selected, setSelected] = useState<Selected | null>(null);
-  const [dialog, setDialog] = useState<{ def: Json; path: string; title: string } | null>(null);
+  const [dialog, setDialog] = useState<{ def: Json; path: string; title: string; styles: { available: StyleOption[]; selected: string[] } } | null>(null);
   const [status, setStatus] = useState<string>('');
   const [busy, setBusy] = useState(false);
   const [reloadKey, setReloadKey] = useState(0);
@@ -104,9 +104,9 @@ export function Editor({ page, onOpenSites }: { page: string; onOpenSites: () =>
   function select(s: Selected) { setSelected(s); setDialog(null); }
 
   async function openDialogFor(path: string, type: string) {
-    const def = await getDialog(type);
-    if (!def) { setStatus(`${type} has no cq:dialog`); return; }
-    setDialog({ def, path, title: def['jcr:title'] || type });
+    const [def, styles] = await Promise.all([getDialog(type), getStyles(path)]);
+    if (!def) { setStatus(`${type} has no cq:dialog (checked super types too)`); return; }
+    setDialog({ def, path, title: def['jcr:title'] || type, styles });
   }
 
   async function act(fn: () => Promise<any>, okMsg?: string) {
@@ -161,7 +161,7 @@ export function Editor({ page, onOpenSites }: { page: string; onOpenSites: () =>
         {mode === 'edit' && (
           <aside className="side side--right">
             {dialog ? (
-              <Dialog dialog={dialog.def} path={dialog.path} onSaved={() => { setDialog(null); setStatus('Saved'); reload(); }} onCancel={() => setDialog(null)} />
+              <Dialog dialog={dialog.def} path={dialog.path} styles={dialog.styles} onSaved={() => { setDialog(null); setStatus('Saved'); reload(); }} onCancel={() => setDialog(null)} />
             ) : selected ? (
               <div className="sel">
                 <h3>{selected.type.split('/').pop()}</h3>

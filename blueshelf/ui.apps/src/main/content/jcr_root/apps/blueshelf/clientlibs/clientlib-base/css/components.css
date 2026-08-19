@@ -1,0 +1,7 @@
+/* Base component blocks (BEM, like Core Components' cmp-* classes) */
+.cmp-title{margin:1.5rem 0 .75rem}.cmp-title__text{margin:0;font-size:1.75rem;line-height:1.2}
+.cmp-teaser{display:grid;grid-template-columns:1fr 1fr;gap:1.25rem;background:#fff;border-radius:10px;overflow:hidden;margin:1rem 0}
+.cmp-teaser__image{width:100%;height:100%;object-fit:cover;min-height:180px}.cmp-teaser__content{padding:1.25rem}
+.cmp-teaser__title{margin:0 0 .5rem}.cmp-teaser__action{display:inline-block;margin-top:.75rem;color:#0046be;font-weight:600}
+.bs-teaser .cmp-teaser{border:1px solid #dfe4ea}
+@media (max-width:720px){.cmp-teaser{grid-template-columns:1fr}}

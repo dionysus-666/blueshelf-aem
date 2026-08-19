@@ -1,0 +1,8 @@
+/* Style System classes — referenced by policies (cq:styleClasses). Authors toggle them, no dialog fields needed. */
+.hero--compact{padding:1.25rem 1.5rem}.hero--compact .hero__title{font-size:1.5rem}
+.hero--center{text-align:center}
+.hero--dark{background:#1d252c!important;color:#fff!important}.hero--dark .hero__cta{background:#ffe000;color:#1d252c}
+.hero--outlined{background:transparent!important;color:#1d252c!important;border:3px solid #0046be}.hero--outlined .hero__cta{background:#0046be;color:#fff}
+.cmp-title--center{text-align:center}.cmp-title--underline .cmp-title__text{display:inline-block;border-bottom:4px solid #ffe000;padding-bottom:.25rem}
+.plp--compact .plp__grid{grid-template-columns:repeat(auto-fill,minmax(160px,1fr))}.plp--compact .card__name{min-height:0;font-size:.9rem}
+.plp--row .plp__grid{display:flex;overflow-x:auto;gap:1rem;scroll-snap-type:x mandatory}.plp--row .card{min-width:240px;scroll-snap-align:start}

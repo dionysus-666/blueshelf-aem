@@ -108,7 +108,7 @@ export async function listComponents(): Promise<ComponentDef[]> {
 
 /** Allowed components for a container = the template's policy for that container (AEM: design/policy). */
 export async function allowedComponents(templatePath: string | undefined, containerName: string, all: ComponentDef[]): Promise<ComponentDef[]> {
-  const visible = all.filter((c) => c.group && c.group !== '.hidden');
+  const visible = all.filter((c) => c.group && !c.group.startsWith('.')); // '.hidden', '.blueshelf.base' are not authorable
   if (!templatePath) return visible;
   const mapping = await getJson(`${templatePath}/policies/jcr:content/${containerName}`, 0);
   const policyRel = mapping?.['cq:policy'];
@@ -119,8 +119,27 @@ export async function allowedComponents(templatePath: string | undefined, contai
   return visible.filter((c) => rules.some((r) => (r.startsWith('group:') ? c.group === r.slice(6) : c.resourceType === r)));
 }
 
+/**
+ * Dialog lookup WITH inheritance: if the component has no cq:dialog, follow sling:resourceSuperType
+ * (proxy components inherit the base component's dialog). AEM's Granite does the same resolution.
+ */
 export async function getDialog(resourceType: string): Promise<Json | null> {
-  return getJson(`/apps/${resourceType}/cq:dialog`, 10);
+  let rt: string | undefined = resourceType;
+  for (let hops = 0; rt && hops < 10; hops++) {
+    const dlg = await getJson(`/apps/${rt}/cq:dialog`, 10);
+    if (dlg) return dlg;
+    const def = await getJson(`/apps/${rt}`, 0);
+    rt = def?.['sling:resourceSuperType'];
+  }
+  return null;
+}
+
+export interface StyleOption { id: string; label: string; classes: string; group: string; }
+/** Style System: styles offered by the template policy for this component + currently selected ids. */
+export async function getStyles(path: string): Promise<{ available: StyleOption[]; selected: string[] }> {
+  const res = await fetch(`${path}.styles.json`, { headers: jsonHeaders, credentials: 'same-origin' });
+  if (!res.ok) return { available: [], selected: [] };
+  return res.json();
 }
 
 /** Add a component to a container; `before` = sibling name to insert before (Sling `:order`). */
