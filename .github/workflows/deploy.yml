@@ -19,20 +19,30 @@ jobs:
     environment: production
     env:
       REVALIDATE_URL: ${{ secrets.STOREFRONT_REVALIDATE_URL }}
+      DEPLOY_HOST: ${{ secrets.DEPLOY_HOST }}
     steps:
+      - name: Check target
+        run: |
+          if [ -z "$DEPLOY_HOST" ]; then echo "::notice::No DEPLOY_HOST secret configured — nothing to deploy to yet (set DEPLOY_HOST, DEPLOY_USER, DEPLOY_SSH_KEY, AEM_ADMIN_PASSWORD)."; fi
       - uses: actions/checkout@v4
+        if: env.DEPLOY_HOST != ''
       - uses: actions/setup-java@v4
+        if: env.DEPLOY_HOST != ''
         with: { distribution: temurin, java-version: '21', cache: maven }
       - uses: actions/setup-node@v4
+        if: env.DEPLOY_HOST != ''
         with: { node-version: '20' }
       - name: Build the `all` package
+        if: env.DEPLOY_HOST != ''
         working-directory: blueshelf
         run: mvn -B -ntp -DskipTests clean package
       - name: Prepare SSH
+        if: env.DEPLOY_HOST != ''
         run: |
           mkdir -p ~/.ssh && echo "${{ secrets.DEPLOY_SSH_KEY }}" > ~/.ssh/id_ed25519 && chmod 600 ~/.ssh/id_ed25519
           ssh-keyscan -H "${{ secrets.DEPLOY_HOST }}" >> ~/.ssh/known_hosts
       - name: Ship compose + dispatcher config, start containers
+        if: env.DEPLOY_HOST != ''
         env: { H: '${{ secrets.DEPLOY_USER }}@${{ secrets.DEPLOY_HOST }}' }
         run: |
           ssh $H 'mkdir -p ~/blueshelf'
@@ -41,6 +51,7 @@ jobs:
           OWNER=$(echo "${{ github.repository_owner }}" | tr '[:upper:]' '[:lower:]')
           ssh $H "cd ~/blueshelf && echo OWNER=$OWNER > .env && docker compose pull && docker compose up -d"
       - name: Wait for author & publish, install the package on both (= Cloud Manager deploy to author+publish)
+        if: env.DEPLOY_HOST != ''
         env: { H: '${{ secrets.DEPLOY_USER }}@${{ secrets.DEPLOY_HOST }}', PW: '${{ secrets.AEM_ADMIN_PASSWORD }}' }
         run: |
           scp blueshelf/all/target/blueshelf.all-*.zip $H:~/blueshelf/all.zip
@@ -48,6 +59,7 @@ jobs:
             for p in 4502 4503; do curl -fs -u admin:$PW -F file=@\$HOME/blueshelf/all.zip -F force=true http://localhost:\$p/bin/cpm/package.upload.json | head -c 200; echo; \
               curl -fs -u admin:$PW -X POST http://localhost:\$p/bin/cpm/package.install.json/com.blueshelf/blueshelf.all/1.0.0-SNAPSHOT | head -c 200; echo; done"
       - name: Smoke test via dispatcher
+        if: env.DEPLOY_HOST != ''
         run: |
           sleep 30
           curl -fsS -D - -o /dev/null "http://${{ secrets.DEPLOY_HOST }}/content/blueshelf/us/en.html" | grep -iE "HTTP/|x-cache"
