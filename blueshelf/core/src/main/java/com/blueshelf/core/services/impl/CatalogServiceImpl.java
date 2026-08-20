@@ -1,5 +1,7 @@
 package com.blueshelf.core.services.impl;
 
+import com.blueshelf.core.services.catalog.Store;
+import com.fasterxml.jackson.core.type.TypeReference;
 import com.blueshelf.core.services.CatalogService;
 import com.blueshelf.core.services.catalog.Product;
 import com.blueshelf.core.services.catalog.ProductPage;
@@ -122,6 +124,18 @@ public class CatalogServiceImpl implements CatalogService {
         });
         return Optional.ofNullable(p);
     }
+
+    @Override
+      public List<Store> storesNear(String zip) {
+          if (zip == null || zip.isBlank()) return List.of();
+          String url = config.baseUrl() + "/api/stores?zip=" + enc(zip.trim());
+          List<Store> stores = cached("stores|" + zip.trim(), List.class, () ->
+  {
+              String body = get(url);
+              return body == null ? null : mapper.readValue(body, new TypeReference<List<Store>>() {});
+          });
+          return stores == null ? List.of() : stores;
+      }
 
     @Override
     public String status() {

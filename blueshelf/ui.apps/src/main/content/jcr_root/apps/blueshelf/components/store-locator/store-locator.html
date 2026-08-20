@@ -1,0 +1,17 @@
+<section class="stores" data-sly-use.model="com.blueshelf.core.models.StoreLocatorModel">
+    <h2 data-sly-test="${model.title}">${model.title}</h2>
+    <form class="search" method="get" action="${model.pageUrl @ context='uri'}">
+        <input class="search__input" type="text" name="zip" value="${model.zip}" placeholder="ZIP code" required>
+        <button class="search__btn" type="submit">Find stores</button>
+    </form>
+    <!--/* HTL has no string concatenation; split states (or use @ format=[...]). Also covers the no-zip case. */-->
+    <p data-sly-test="${model.empty && model.zip}">No stores found near ${model.zip}. Try another ZIP.</p>
+    <p data-sly-test="${model.empty && !model.zip}">Enter a ZIP code to find stores near you.</p>
+    <ul class="stores__list" data-sly-test="${!model.empty}">
+        <li class="stores__item" data-sly-list.store="${model.stores}">
+            <strong>${store.name}</strong><br>
+            ${store.address}, ${store.city}, ${store.state} ${store.zip}<br>
+            <small>Open ${store.hours}</small>
+        </li>
+    </ul>
+</section>

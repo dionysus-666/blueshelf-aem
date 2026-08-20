@@ -34,10 +34,18 @@ class CatalogServiceImplTest {
     private CatalogService service;
 
     private static final String PAGE_JSON = "{\"items\":[{\"sku\":\"BS1\",\"name\":\"TV\",\"price\":100.0,\"salePrice\":80.0,\"extraField\":1}],\"total\":1}";
+    // note the extra "lat" field: @JsonIgnoreProperties must swallow it
+    private static final String STORES_JSON = "[{\"id\":\"S001\",\"name\":\"Richfield\",\"city\":\"Richfield\",\"zip\":\"55423\",\"lat\":44.86},{\"id\":\"S002\",\"name\":\"Minneapolis\",\"city\":\"Minneapolis\",\"zip\":\"55402\"}]";
 
     @BeforeEach
     void setUp() throws Exception {
         server = HttpServer.create(new InetSocketAddress("127.0.0.1", 0), 0);
+        server.createContext("/api/stores", ex -> {
+            calls.incrementAndGet();
+            byte[] body = STORES_JSON.getBytes(StandardCharsets.UTF_8);
+            ex.sendResponseHeaders(statusToReturn.get() == 200 ? 200 : 500, body.length);
+            try (OutputStream os = ex.getResponseBody()) { os.write(body); }
+        });
         server.createContext("/api/products", ex -> {
             calls.incrementAndGet();
             int status = statusToReturn.get();
@@ -67,6 +75,18 @@ class CatalogServiceImplTest {
         ProductPage p2 = service.search(ProductQuery.category("tvs", 6));
         assertEquals(ProductPage.Source.CACHE, p2.getSource(), "second call served from cache");
         assertEquals(1, calls.get(), "backend called once");
+    }
+
+    @Test
+    void storesNearParsesCachesAndDegrades() {
+        var stores = service.storesNear("55423");
+        assertEquals(2, stores.size());
+        assertEquals("Richfield", stores.get(0).getName(), "unknown 'lat' field ignored, not fatal");
+        int callsAfterFirst = calls.get();
+        service.storesNear("55423");
+        assertEquals(callsAfterFirst, calls.get(), "second lookup served from cache");
+        assertTrue(service.storesNear("  ").isEmpty(), "blank zip -> no backend call, empty list");
+        assertTrue(service.storesNear(null).isEmpty());
     }
 
     @Test

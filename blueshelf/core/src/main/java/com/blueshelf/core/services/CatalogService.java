@@ -6,6 +6,8 @@ import com.blueshelf.core.services.catalog.ProductQuery;
 import org.osgi.annotation.versioning.ProviderType;
 
 import java.util.Optional;
+import java.util.List;
+import com.blueshelf.core.services.catalog.Store;
 
 /**
  * Read access to the product catalog (an external system). Components depend on THIS interface,
@@ -23,6 +25,7 @@ public interface CatalogService {
     /** Empty if unknown OR upstream down (callers render a friendly message either way). */
     Optional<Product> getProduct(String sku);
 
+    List<Store> storesNear(String zip);
     /** Health snapshot for debugging/monitoring (exposed in the OSGi console + servlet). */
     String status();
 }
