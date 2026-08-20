@@ -61,15 +61,17 @@ export function Sites({ root, onOpenEditor }: { root: string; onOpenEditor: (pat
         <tbody>
           {pages.map((p) => (
             <tr key={p.path}>
-              <td><button className="link" onClick={() => onOpenEditor(p.path)}>{p.title}</button></td>
+              <td>{p.isFolder ? <button className="link" onClick={() => setCwd(p.path)}>{p.title}</button> : <button className="link" onClick={() => onOpenEditor(p.path)}>{p.title}</button>}</td>
               <td><code>{p.name}</code>{p.hasChildren && <button className="small" onClick={() => setCwd(p.path)}>children ›</button>}</td>
               <td className="muted small">{p.template?.split('/').pop() || '—'}</td>
               <td className="actions">
+                {p.isFolder ? <button onClick={() => setCwd(p.path)}>Open</button> : <>
                 <button onClick={() => onOpenEditor(p.path)}>Edit</button>
                 <a className="btn" href={`${p.path}.html`} target="_blank" rel="noreferrer">View</a>
                 <button onClick={() => run(() => replicate(p.path, 'activate'), `Published ${p.path}`)}>Publish</button>
                 <button onClick={() => run(() => replicate(p.path, 'deactivate'), `Unpublished ${p.path}`)}>Unpublish</button>
                 <button className="danger" onClick={() => { if (confirm(`Delete ${p.path} and its children?`)) run(() => deleteNode(p.path), 'Deleted'); }}>Delete</button>
+                </>}
               </td>
             </tr>
           ))}

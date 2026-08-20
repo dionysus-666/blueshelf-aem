@@ -57,6 +57,7 @@ class ComponentModelsTest {
         TeaserModel t = context.resourceResolver().getResource("/content/blueshelf/us/en/jcr:content/root/teaser").adaptTo(TeaserModel.class);
         assertEquals("/content/blueshelf/us/en/tvs.html", t.getLink());
         assertEquals("Learn more", t.getLinkText());
+        assertEquals("Open-box", t.getBadge());
         assertFalse(t.isEmpty());
     }
 

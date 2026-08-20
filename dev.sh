@@ -12,7 +12,7 @@ case "${1:-}" in
   deploy-publish) (cd "$ROOT/blueshelf" && mvn -B install -PautoInstallSinglePackage -pl all -Dsling.port=4503) ;;
   deploy-all) "$0" deploy && "$0" deploy-publish ;;
   bundle)  (cd "$ROOT/blueshelf" && mvn -B install -PautoInstallBundle -pl core) ;;           # hot-deploy Java only
-  apps)    (cd "$ROOT/blueshelf" && mvn -B install -PautoInstallPackage -pl ui.apps) ;;       # HTL/dialogs only (includes FE build)
+  apps)    (cd "$ROOT/blueshelf" && mvn -B install -PautoInstallPackage -pl ui.frontend,ui.apps) ;;   # React build + HTL/dialogs/clientlibs
   fe)      (cd "$ROOT/blueshelf/ui.frontend" && npm run watch) ;;                              # rebuild React on change (then ./dev.sh apps)
   logs)    docker logs -f blueshelf-author ;;
   flush)   curl -s -X POST -H "CQ-Action: Activate" -H "CQ-Handle: ${2:-/content/blueshelf}" http://localhost:8080/dispatcher/invalidate.cache ;;  # flush dispatcher cache

@@ -43,6 +43,7 @@ class HeroModelTest {
         assertEquals("Shop now", hero.getCtaLabel());
         assertEquals("/content/blueshelf/us/en/tvs.html", hero.getCtaLink(), ".html appended to internal link");
         assertEquals("yellow", hero.getTheme());
+        assertEquals("Deal of the day", hero.getBadge());
         assertTrue(hero.hasCta());
         assertEquals("/content/blueshelf/us/en/jcr:content/root/hero", hero.getPath());
     }
@@ -57,6 +58,7 @@ class HeroModelTest {
         assertNotNull(hero, "OPTIONAL injection strategy => model still instantiates with missing props");
         assertEquals("Minimal", hero.getTitle());
         assertEquals("blue", hero.getTheme());
+        assertNull(hero.getBadge(), "missing property => null, not an exception (OPTIONAL strategy)");
         assertFalse(hero.hasCta());
         assertNull(hero.getCtaLink());
     }

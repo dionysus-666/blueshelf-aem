@@ -18,8 +18,10 @@ public class TeaserModel {
     @ValueMapValue private String image;
     @ValueMapValue private String linkURL;
     @ValueMapValue private String linkText;
+    @ValueMapValue private String badge;
 
     public String getTitle() { return title; }
+    public String getBadge() { return badge; }
     public String getDescription() { return description; }
     public String getImage() { return image; }
     public String getLinkText() { return StringUtils.defaultIfBlank(linkText, "Learn more"); }
