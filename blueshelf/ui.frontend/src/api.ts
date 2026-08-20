@@ -54,17 +54,21 @@ export async function logout(): Promise<void> {
 }
 
 // ---------- pages ----------
-export interface PageNode { path: string; name: string; title: string; template?: string; hasChildren: boolean; resourceType?: string; }
+export interface PageNode { path: string; name: string; title: string; template?: string; hasChildren: boolean; resourceType?: string; isFolder?: boolean; }
 
 export async function listPages(parent: string): Promise<PageNode[]> {
   const j = await getJson(parent, 2); // depth 2 so we can see each child's jcr:content + grandchildren existence
   if (!j) return [];
+  const FOLDERS = ['sling:Folder', 'sling:OrderedFolder', 'nt:folder'];
+  const isNode = (v: any, types: string[]) => v && typeof v === 'object' && types.includes(v['jcr:primaryType']);
+  // AEM's Sites console lists pages AND folders (e.g. /content/site/us is a folder, /us/en the language root page)
   return Object.entries(j)
-    .filter(([, v]) => v && typeof v === 'object' && v['jcr:primaryType'] === 'cq:Page')
+    .filter(([, v]) => isNode(v, ['cq:Page', ...FOLDERS]))
     .map(([name, v]) => {
+      const isFolder = FOLDERS.includes(v['jcr:primaryType']);
       const jc = v['jcr:content'] || {};
-      const hasChildren = Object.values(v).some((c: any) => c && typeof c === 'object' && c['jcr:primaryType'] === 'cq:Page');
-      return { path: `${parent}/${name}`, name, title: jc['jcr:title'] || name, template: jc['cq:template'], resourceType: jc['sling:resourceType'], hasChildren };
+      const hasChildren = Object.values(v).some((c: any) => isNode(c, ['cq:Page', ...FOLDERS]));
+      return { path: `${parent}/${name}`, name, title: isFolder ? `📁 ${jc['jcr:title'] || name}` : (jc['jcr:title'] || name), template: jc['cq:template'], resourceType: jc['sling:resourceType'], hasChildren, isFolder };
     });
 }
 

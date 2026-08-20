@@ -2,6 +2,7 @@
 <div class="cmp-teaser ${style.cssClasses}" data-sly-test="${!teaser.empty}">
     <img class="cmp-teaser__image" data-sly-test="${teaser.image}" src="${teaser.image}" alt="${teaser.title}">
     <div class="cmp-teaser__content">
+        <span class="badge" data-sly-test="${teaser.badge}">${teaser.badge}</span>
         <h3 class="cmp-teaser__title">${teaser.title}</h3>
         <div class="cmp-teaser__description">${teaser.description @ context='html'}</div>
         <a class="cmp-teaser__action" data-sly-test="${teaser.link}" href="${teaser.link @ context='uri'}">${teaser.linkText}</a>

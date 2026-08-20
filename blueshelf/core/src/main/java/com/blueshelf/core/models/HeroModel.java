@@ -62,6 +62,10 @@ public class HeroModel {
     @ValueMapValue
     private String theme; // e.g. "blue" | "yellow" (Best Buy palette ;-))
 
+    /** Exercise 1: small promo label. Field name == JCR property name (no `name=` needed). */
+    @ValueMapValue
+    private String badge;
+
     /** The resource this model was adapted from — handy for path/debug. */
     @SlingObject
     private Resource resource;
@@ -108,6 +112,10 @@ public class HeroModel {
 
     public String getTheme() {
         return theme;
+    }
+
+    public String getBadge() {
+        return badge;
     }
 
     public boolean hasCta() {

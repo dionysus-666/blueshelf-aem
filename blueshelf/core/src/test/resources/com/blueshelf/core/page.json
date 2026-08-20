@@ -5,7 +5,7 @@
     "root": { "jcr:primaryType": "nt:unstructured", "sling:resourceType": "blueshelf/components/container",
       "hero": { "jcr:primaryType": "nt:unstructured", "sling:resourceType": "blueshelf/components/hero", "jcr:title": "Hi", "cq:styleIds": ["2001"] },
       "title": { "jcr:primaryType": "nt:unstructured", "sling:resourceType": "blueshelf/components/title" },
-      "teaser": { "jcr:primaryType": "nt:unstructured", "sling:resourceType": "blueshelf/components/teaser", "jcr:title": "T", "linkURL": "/content/blueshelf/us/en/tvs" },
+      "teaser": { "jcr:primaryType": "nt:unstructured", "sling:resourceType": "blueshelf/components/teaser", "jcr:title": "T", "badge": "Open-box", "linkURL": "/content/blueshelf/us/en/tvs" },
       "text": { "jcr:primaryType": "nt:unstructured", "sling:resourceType": "blueshelf/components/text", "text": "<p>x</p>" } } },
   "tvs": { "jcr:primaryType": "cq:Page", "jcr:content": { "jcr:primaryType": "cq:PageContent", "jcr:title": "TVs", "sling:resourceType": "blueshelf/components/page" } },
   "product": { "jcr:primaryType": "cq:Page", "jcr:content": { "jcr:primaryType": "cq:PageContent", "jcr:title": "Product", "hideInNav": true, "sling:resourceType": "blueshelf/components/page" } }

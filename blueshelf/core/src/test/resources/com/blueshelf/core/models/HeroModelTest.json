@@ -14,7 +14,8 @@
         "subtitle": "Save up to 40%",
         "ctaLabel": "Shop now",
         "ctaLink": "/content/blueshelf/us/en/tvs",
-        "theme": "yellow"
+        "theme": "yellow",
+        "badge": "Deal of the day"
       },
       "hero-minimal": {
         "jcr:primaryType": "nt:unstructured",

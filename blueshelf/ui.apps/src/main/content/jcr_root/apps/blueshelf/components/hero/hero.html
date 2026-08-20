@@ -5,6 +5,7 @@
 */-->
 <section class="hero hero--${hero.theme} ${style.cssClasses}" data-sly-use.hero="com.blueshelf.core.models.HeroModel" data-sly-use.style="com.blueshelf.core.models.StyleModel"
          data-sly-test="${hero.title}">
+    <span class="hero__badge" data-sly-test="${hero.badge}">${hero.badge}</span>
     <h1 class="hero__title">${hero.title}</h1>
     <p class="hero__subtitle" data-sly-test="${hero.subtitle}">${hero.subtitle}</p>
     <a class="hero__cta" data-sly-test="${hero.hasCta}" href="${hero.ctaLink @ context='uri'}" target="${properties.newTab ? '_blank' : ''}">${hero.ctaLabel}</a>
