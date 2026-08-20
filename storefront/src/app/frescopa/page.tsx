@@ -7,32 +7,47 @@ import Link from 'next/link';
  * Server component → fetch happens on the server (no CORS), ISR 5 min. If the query isn't published
  * (or the trial expired), the page renders a friendly notice instead of failing the build.
  */
-const QUERY_URL = process.env.AEM_TRIAL_GRAPHQL_URL
-  || 'https://publish-p153710-e1614654.adobeaemcloud.com/graphql/execute.json/frescopa/AllArticles';
+// Preferred: a published persisted query (cacheable GET; set AEM_TRIAL_GRAPHQL_URL when available).
+// Fallback: the direct POST endpoint — open on this non-prod trial; a hardened prod publish would
+// block arbitrary POST GraphQL at the CDN/dispatcher and allow persisted queries only.
+const PERSISTED_URL = process.env.AEM_TRIAL_GRAPHQL_URL || '';
+const POST_ENDPOINT = process.env.AEM_TRIAL_GRAPHQL_ENDPOINT
+  || 'https://publish-p153710-e1614654.adobeaemcloud.com/content/_cq_graphql/aem-boilerplate-frescopa/endpoint.json';
+const LIST_QUERY = '{ articleList(limit: 20, sort: "title ASC") { items { _path title author } } }';
 
 interface Article { _path: string; title: string; author?: string }
 
-async function fetchArticles(): Promise<{ articles: Article[]; error?: string }> {
-  try {
-    const res = await fetch(QUERY_URL, { next: { revalidate: 300 }, headers: { Accept: 'application/json' } });
-    const json = await res.json().catch(() => null);
-    const items = json?.data?.articleList?.items;
-    if (!res.ok || !items) return { articles: [], error: json?.errors?.[0]?.message || `HTTP ${res.status}` };
-    return { articles: items };
-  } catch (e: unknown) {
-    return { articles: [], error: e instanceof Error ? e.message : 'fetch failed' };
+async function fetchArticles(): Promise<{ articles: Article[]; error?: string; via: string }> {
+  const attempts: { via: string; run: () => Promise<Response> }[] = [];
+  if (PERSISTED_URL) attempts.push({ via: 'persisted query (GET)', run: () => fetch(PERSISTED_URL, { next: { revalidate: 300 } }) });
+  attempts.push({
+    via: 'direct endpoint (POST)',
+    run: () => fetch(POST_ENDPOINT, { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ query: LIST_QUERY }), next: { revalidate: 300 } }),
+  });
+  let error = 'no endpoint configured';
+  for (const a of attempts) {
+    try {
+      const res = await a.run();
+      const json = await res.json().catch(() => null);
+      const items = json?.data?.articleList?.items;
+      if (res.ok && items) return { articles: items, via: a.via };
+      error = json?.errors?.[0]?.message || `HTTP ${res.status}`;
+    } catch (e: unknown) {
+      error = e instanceof Error ? e.message : 'fetch failed';
+    }
   }
+  return { articles: [], error, via: 'none' };
 }
 
 export const metadata = { title: 'Frescopa Articles | BlueShelf' };
 
 export default async function FrescopaPage() {
-  const { articles, error } = await fetchArticles();
+  const { articles, error, via } = await fetchArticles();
   return (
     <section className="plp">
       <header className="plp__head">
         <h2>Frescopa articles — live from AEM as a Cloud Service</h2>
-        <small className="plp__src">source: persisted GraphQL query</small>
+        <small className="plp__src">source: {via}</small>
       </header>
       <p>
         This content is authored as <b>Content Fragments</b> in a real AEMaaCS instance and delivered through a
