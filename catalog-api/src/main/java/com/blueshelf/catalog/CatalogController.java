@@ -61,8 +61,10 @@ public class CatalogController {
     }
 
     @GetMapping("/stores")
-    public List<Store> stores(@RequestParam(required = false) String zip) {
-        // toy "nearby": same 3-digit prefix first, then the rest
+    public List<Store> stores(@RequestParam(required = false) String zip) throws InterruptedException {
+        chaos(); // fault injection must cover EVERY endpoint consumers depend on, or resilience tests lie
+        // toy "nearby": same 3-digit prefix first, then the rest. Note: sorts, never filters —
+        // an unknown zip still returns 5 stores; "no results" only happens when this service is down.
         return repo.stores().stream()
                 .sorted(Comparator.comparing((Store s) -> zip == null || !s.zip().startsWith(zip.substring(0, Math.min(3, zip.length()))) ? 1 : 0))
                 .limit(5).toList();

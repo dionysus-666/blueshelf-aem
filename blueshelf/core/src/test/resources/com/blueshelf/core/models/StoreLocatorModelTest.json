@@ -1,0 +1,22 @@
+{
+  "jcr:primaryType": "cq:Page",
+  "jcr:content": {
+    "jcr:primaryType": "cq:PageContent",
+    "jcr:title": "Home",
+    "sling:resourceType": "blueshelf/components/page",
+    "root": {
+      "jcr:primaryType": "nt:unstructured",
+      "sling:resourceType": "blueshelf/components/container",
+      "store-locator": {
+        "jcr:primaryType": "nt:unstructured",
+        "sling:resourceType": "blueshelf/components/store-locator",
+        "jcr:title": "Find a store",
+        "defaultZip": "55423"
+      },
+      "store-locator-bare": {
+        "jcr:primaryType": "nt:unstructured",
+        "sling:resourceType": "blueshelf/components/store-locator"
+      }
+    }
+  }
+}
