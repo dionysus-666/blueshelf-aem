@@ -60,8 +60,6 @@
         /0010 { /glob "/content/blueshelf/*.search.json" /type "deny" }
         /0011 { /glob "/content/blueshelf/*/search.html" /type "deny" }
         /0012 { /glob "/content/blueshelf/*/search.model.json" /type "deny" }
-        # perf: cache all content pages aggressively to improve hit ratio (2026-08 tuning)
-        /0020 { /glob "/content/blueshelf/*.html" /type "allow" }
       }
 
       # which cached files are invalidated when a .stat is touched (vs kept until explicitly flushed)
