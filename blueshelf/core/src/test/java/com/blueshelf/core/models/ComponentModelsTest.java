@@ -75,6 +75,7 @@ class ComponentModelsTest {
         @SuppressWarnings("unchecked") Map<String, Object> items = (Map<String, Object>) root.get(":items");
         @SuppressWarnings("unchecked") Map<String, Object> hero = (Map<String, Object>) items.get("hero");
         assertEquals("Hi", hero.get("title"));
+        assertTrue(hero.containsKey("hasCta"), "hasCta() is not a bean getter: must be exported explicitly or the SPA contract silently loses it");
         @SuppressWarnings("unchecked") Map<String, Object> text = (Map<String, Object>) items.get("text");
         assertEquals("<p>x</p>", text.get("text"), "components without a model export raw properties");
         assertEquals(List.of("Home", "TVs"), page.getNavigation().stream().map(n -> n.get("title")).toList(), "hideInNav respected");

@@ -1,6 +1,6 @@
 import Link from 'next/link';
-
-export interface Product { sku: string; name: string; brand: string; price: number; salePrice?: number | null; currentPrice: number; onSale: boolean; savingsPercent: number; rating: number; reviewCount: number; inStock: boolean; image: string; shortDescription?: string; highlights?: string[] }
+import { type Product, isOnSale, priceOf, savingsOf } from '@/lib/products';
+export type { Product };
 
 export function ProductList(p: { title?: string; products?: Product[]; total?: number; available?: boolean; stale?: boolean; source?: string; searchText?: string; empty?: boolean }) {
   return (
@@ -23,9 +23,9 @@ export function ProductList(p: { title?: string; products?: Product[]; total?: n
                 <span className="card__name">{x.name}</span>
               </Link>
               <div className="card__price">
-                <span className={`price ${x.onSale ? 'price--sale' : ''}`}>${x.currentPrice.toFixed(2)}</span>
-                {x.onSale && <span className="price--was">Was ${x.price}</span>}
-                {x.onSale && <span className="badge">Save {x.savingsPercent}%</span>}
+                <span className={`price ${isOnSale(x) ? 'price--sale' : ''}`}>${priceOf(x).toFixed(2)}</span>
+                {isOnSale(x) && <span className="price--was">Was ${x.price}</span>}
+                {isOnSale(x) && <span className="badge">Save {savingsOf(x)}%</span>}
               </div>
               <div className="card__rating">★ {x.rating} <small>({x.reviewCount})</small></div>
               <div className={`card__stock ${x.inStock ? 'in' : 'out'}`}>{x.inStock ? 'In stock' : 'Sold out'}</div>
