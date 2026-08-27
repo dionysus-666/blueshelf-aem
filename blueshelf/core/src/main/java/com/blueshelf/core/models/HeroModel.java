@@ -118,6 +118,12 @@ public class HeroModel {
         return badge;
     }
 
+    /**
+     * Not a bean getter (no get/is prefix), so Jackson would SKIP it in the .model.json export while HTL happily
+     * calls it — the storefront gated the CTA button on it and silently lost "Shop TVs". Export it explicitly:
+     * the JSON is a public contract (NOTES/05).
+     */
+    @JsonProperty("hasCta")
     public boolean hasCta() {
         return StringUtils.isNotBlank(ctaLabel) && StringUtils.isNotBlank(resolvedCtaLink);
     }
